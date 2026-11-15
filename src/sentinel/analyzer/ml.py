@@ -21,7 +21,7 @@ from sentinel.analyzer.factors import ALL_FACTORS, GROUPS, WARMUP, forward_retur
 
 LGB_PARAMS = dict(objective="binary", n_estimators=200, learning_rate=0.03, num_leaves=7, min_child_samples=40,
                   subsample=0.8, subsample_freq=1, colsample_bytree=0.7, reg_lambda=5.0, verbose=-1,
-                  random_state=7)
+                  random_state=7, n_jobs=1)   # one thread: OpenMP oversubscription stalls small cloud containers
 
 
 @dataclass

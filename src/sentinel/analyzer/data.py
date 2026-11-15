@@ -96,15 +96,16 @@ def _offline_daily(ticker: str) -> pd.DataFrame:
 def fetch_history(ticker: str, period: str = "10y") -> pd.DataFrame:
     if os.environ.get("SENTINEL_OFFLINE_DAILY"):
         return _offline_daily(ticker)
-    try:
-        import yfinance as yf
+    try:  # one fast HTTP request; yfinance is the fallback (its cookie flow is often rate-limited on cloud hosts)
+        return _chart_api(ticker, period)
+    except Exception as e:
+        log.warning("chart API failed for %s (%s); trying yfinance", ticker, e)
+    import yfinance as yf
 
-        df = yf.Ticker(ticker).history(period=period, interval="1d", auto_adjust=False, actions=False)
-        if df is not None and len(df) > 50:
-            return _clean(df)
-    except Exception as e:  # rate limit, network, parsing
-        log.warning("yfinance failed for %s (%s); trying chart API", ticker, e)
-    return _chart_api(ticker, period)
+    df = yf.Ticker(ticker).history(period=period, interval="1d", auto_adjust=False, actions=False, timeout=20)
+    if df is None or df.empty:
+        raise ValueError(f"No data for {ticker}. Check the symbol (e.g. AAPL, BTC-USD, GC=F, RELIANCE.NS).")
+    return _clean(df)
 
 
 @dataclass

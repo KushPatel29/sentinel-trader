@@ -38,7 +38,7 @@ def lab_config(symbols: list[str], n_timestamps: int) -> Config:
     cfg.model.min_train_bars = max(300, int(n_timestamps * 0.45))
     cfg.model.test_bars = max(100, int(n_timestamps * 0.12))
     cfg.model.lgbm = dict(n_estimators=300, learning_rate=0.03, num_leaves=15, min_child_samples=100,
-                          subsample=0.8, subsample_freq=1, colsample_bytree=0.8, verbose=-1)
+                          subsample=0.8, subsample_freq=1, colsample_bytree=0.8, verbose=-1, n_jobs=1)
     return cfg
 
 

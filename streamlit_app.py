@@ -4,9 +4,13 @@ Run locally:  streamlit run streamlit_app.py
 """
 from __future__ import annotations
 
+import os
 import sys
+import time
 import warnings
 from pathlib import Path
+
+os.environ.setdefault("OMP_NUM_THREADS", "1")   # before numpy/lightgbm load: avoids thread oversubscription
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 warnings.filterwarnings("ignore")
@@ -49,7 +53,10 @@ st.markdown("""
 # ----------------------------------------------------------------------------------------- cached work
 @st.cache_data(ttl=3600, show_spinner=False)
 def run_analysis(ticker: str):
-    return analyze(ticker)
+    t0 = time.time()
+    a = analyze(ticker)
+    print(f"[sentinel] analyzed {ticker} in {time.time() - t0:.1f}s", flush=True)
+    return a
 
 
 @st.cache_data(ttl=600, show_spinner=False)
