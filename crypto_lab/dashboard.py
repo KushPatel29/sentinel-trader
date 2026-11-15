@@ -12,7 +12,7 @@ import streamlit as st
 
 from sentinel_crypto.config import ROOT, load_protocol
 
-st.set_page_config(page_title="Sentinel | Crypto Research", page_icon="◈", layout="wide")
+st.set_page_config(page_title="Sentinel | Gold, Oil & Crypto", page_icon="◈", layout="wide")
 st.markdown("""<style>
 .block-container{padding-top:3.8rem;max-width:1450px}h1{letter-spacing:-.04em}
 [data-testid="stMetric"]{background:#111a2e;border:1px solid #24314b;border-radius:10px;padding:14px}
@@ -26,13 +26,17 @@ if not (report_dir / "summary.json").exists():
 
 st.markdown('<div class="eyebrow">SENTINEL / RESEARCH TERMINAL</div>', unsafe_allow_html=True)
 st.title("Evidence before exposure.")
-st.markdown('<p class="subtle">Crypto strategies measured after costs, with a frozen historical test and a separate forward paper ledger. No real-money execution.</p>', unsafe_allow_html=True)
+st.markdown('<p class="subtle">Gold, crude oil and crypto research with instrument-specific data checks, chronological model comparisons and separate future observations. No real-money execution.</p>', unsafe_allow_html=True)
 
 if not (report_dir / "summary.json").exists():
     st.info("No research report yet. Run `python -m sentinel_crypto.cli fetch` then `python -m sentinel_crypto.cli research` from crypto_lab.")
     st.stop()
 report = json.loads((report_dir / "summary.json").read_text(encoding="utf-8"))
-hold, live, accuracy, audit, sources = st.tabs(["Frozen test", "Forward paper", "Prediction quality", "Audit trail", "Research notes"])
+focus, hold, live, accuracy, audit, sources = st.tabs(["Gold · Oil · Crypto", "Frozen crypto v1", "Forward paper", "Prediction quality v1", "Audit trail v1", "Research notes"])
+
+with focus:
+    from sentinel_crypto.focus_ui import render_focus
+    render_focus()
 
 
 def pct(x):

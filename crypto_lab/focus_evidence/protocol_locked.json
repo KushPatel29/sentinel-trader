@@ -1,0 +1,143 @@
+{
+  "protocol": {
+    "version": "focus-gold-oil-crypto-2026-11-15-v2",
+    "purpose": "Retrospective research and prospective observation; no broker execution approval",
+    "start": "2018-01-01",
+    "cutoff": "2026-11-14T00:00:00Z",
+    "first_development_test": "2021-01-01T00:00:00Z",
+    "final_start": "2025-11-14T00:00:00Z",
+    "train_days": 730,
+    "calibration_days": 120,
+    "validation_days": 180,
+    "test_days": 180,
+    "seed": 29,
+    "target_annual_vol": 0.2,
+    "max_exposure": 0.6,
+    "daily_loss_limit": 0.02,
+    "drawdown_limit": 0.15,
+    "min_validation_trades": 12,
+    "models": [
+      "prior",
+      "logistic_strong",
+      "logistic",
+      "hist_small",
+      "hist_medium",
+      "extra_trees"
+    ],
+    "feature_sets": [
+      "price",
+      "context"
+    ],
+    "entry_thresholds": [
+      0.53,
+      0.57
+    ],
+    "directions": [
+      "long_only",
+      "long_short"
+    ],
+    "stress_multipliers": [
+      1,
+      2,
+      4
+    ],
+    "assets": {
+      "XAUUSD": {
+        "name": "Spot gold reference",
+        "source": "histdata",
+        "interval": "1h",
+        "horizon_bars": 4,
+        "annual_bars": 5796,
+        "half_spread_bps": 1.0,
+        "slippage_bps": 0.5,
+        "fee_bps": 0.0,
+        "intraday_only": true,
+        "decision_start_hour": 7,
+        "last_entry_hour": 15,
+        "flatten_hour": 20,
+        "execution_ready": false
+      },
+      "WTIUSD": {
+        "name": "WTI crude reference (USOIL-style CFD)",
+        "source": "histdata",
+        "interval": "1h",
+        "horizon_bars": 4,
+        "annual_bars": 5796,
+        "half_spread_bps": 4.0,
+        "slippage_bps": 1.0,
+        "fee_bps": 0.0,
+        "intraday_only": true,
+        "decision_start_hour": 7,
+        "last_entry_hour": 15,
+        "flatten_hour": 20,
+        "execution_ready": false
+      },
+      "WTI_REFERENCE": {
+        "name": "WTI daily futures reference (direction study only)",
+        "source": "yahoo_futures",
+        "ticker": "CL=F",
+        "interval": "1d",
+        "horizon_bars": 3,
+        "annual_bars": 252,
+        "half_spread_bps": 4.0,
+        "slippage_bps": 1.0,
+        "fee_bps": 0.0,
+        "intraday_only": false,
+        "direction_only": true,
+        "execution_ready": false
+      },
+      "BTCUSDT": {
+        "name": "Bitcoin spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 0.25,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      },
+      "ETHUSDT": {
+        "name": "Ethereum spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 0.5,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      },
+      "SOLUSDT": {
+        "name": "Solana spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 1.0,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      }
+    },
+    "context_symbols": {
+      "dollar": "UUP",
+      "bonds": "TLT",
+      "equities": "SPY",
+      "fear": "^VIX",
+      "gold": "GLD",
+      "oil": "USO"
+    },
+    "notes": [
+      "CFD data is a public reference feed, not the user's selected broker.",
+      "Do not reuse v1's inspected crypto history as a newly untouched test.",
+      "Crypto short signals are diagnostics only; spot execution remains long or cash.",
+      "Commodities are flattened intraday to exclude unverified overnight financing and roll credits."
+    ]
+  },
+  "sha256": "d5e329ead7af7b42d4bfce436a693437adec90b1df1fdeb1d8d88136691b58a3",
+  "locked_utc": "2026-11-15T18:28:47.429698+00:00"
+}

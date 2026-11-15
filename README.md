@@ -1,5 +1,13 @@
 # Sentinel Trader
 
+## Gold, USOIL-style CFDs and crypto focus
+
+The [focused upgrade](crypto_lab/docs/FOCUS_RESEARCH.md) adds real XAUUSD and WTI reference minute-data ingestion, hourly session-aware CFD research, long/short accounting, causal market-context features, chronological probability calibration, bounded model tuning, broker bid/ask CSV import and a separate prospective challenger observer. Open **Gold Oil Crypto** in the Streamlit sidebar or the first tab of the local monitor.
+
+**The new tuning did not establish a general accuracy improvement.** Gold's final retrospective direction accuracy was 49.3%; the selected ETH policy lost 1.17%. The WTI CFD reference source has a 940-day gap, so current CFD qualification is blocked. A separate daily `CL=F` direction study is clearly labeled and has no USOIL trading-P&L claim. No candidate is proven best in class or approved for broker execution. The original paper ledger is preserved.
+
+See the [new results and limitations](crypto_lab/focus_evidence/RESULTS.md), [all model/strategy attempts](crypto_lab/focus_evidence/summary.json), and [broker-input template](crypto_lab/broker_profile.example.json). No passwords or exchange keys are required for these research workflows.
+
 ## Crypto research and continuous local paper simulation
 
 The new [Crypto Lab](crypto_lab/README.md) tests BTC, ETH and SOL on 38,595 real four-hour candles. It includes 20 predeclared candidates, chronological model calibration, purged walk-forward validation, a frozen six-month test, fee/slippage stress tests, all 780 validation attempts, and a restartable local forward paper worker. Open **Crypto Research** in the Streamlit sidebar, or run its dedicated local monitor at port 8502.
