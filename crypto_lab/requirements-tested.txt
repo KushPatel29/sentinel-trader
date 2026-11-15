@@ -1,0 +1,13 @@
+# Direct runtime/test versions used for the recorded Windows research run.
+# This is not a full transitive dependency lock.
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.0
+scipy==1.18.1
+requests==2.32.3
+threadpoolctl==3.6.0
+joblib==1.6.0
+streamlit==1.64.0
+pyarrow==24.0.0
+plotly==6.3.1
+pytest==9.1.1

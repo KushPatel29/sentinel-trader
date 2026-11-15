@@ -1,0 +1,464 @@
+{
+  "retrieved_utc": "2026-11-15T18:14:31.530320+00:00",
+  "archives": [
+    {
+      "symbol": "XAUUSD",
+      "period": "2018",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2018",
+      "sha256": "625f521a364aba0887d5acd27405a9e001a426d686ac1e4e15377356e9bd5c4f",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2019",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2019",
+      "sha256": "0ba9fcfbe1a0b640329de9f2b3682d67449d708a92b144f19e51e74480201d79",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2021",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2021",
+      "sha256": "312229c9db5b39138c41b1e488d00ed32e158a0d1fc3f23a225b223c3271c0a4",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2020",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2020",
+      "sha256": "4942ba4cc97b85b8fa3ec62a6a35925632722910eeb5478b1a87d728d62a3d11",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2022",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2022",
+      "sha256": "e752b9d83a14b934099de372c1419ab476278e7cd949c313c3af06207960b1d8",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2023",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2023",
+      "sha256": "89a4f3f7ec2a52b29fbce8d4ca2ab650971817ae371b332f5fe471a488bcffc2",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2025",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2025",
+      "sha256": "dd0b4dc6983c07fafd89ba83b0c7f514aa16977654eaeb4c9fc8884ed359d98e",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2024",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2024",
+      "sha256": "6d47f5cb269e0c4f35c63c7532713aae7dcf98901f605458b00dd6a69e7105de",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2018",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2018",
+      "sha256": "54dc24b9f4cc00e05b477db6c439941f6a589a062596e944f655fdd64b6051cf",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2019",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2019",
+      "sha256": "343b69db02639c102c9ace877528b3ae1bfc96dbe956dc20ac7f551bd9d5baf7",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2020",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2020",
+      "sha256": "04c20df0d0a21e92af77574521d15925ef67504313725a5b43bf7ae3674a39f7",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2021",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2021",
+      "sha256": "d808a19ff0129ced92ca0de1d6c67dc073f271abee520338a7956ef39814e29d",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2022",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2022",
+      "sha256": "876d8e31b1334a5c32d490af8773cdf33c83cade33ff477d46348f3d25553468",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2023",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2023",
+      "sha256": "0e76bb3ed8c7f0c8f6e511ef7b4d8de1cef6604c123b843c76c079fcca9c45fd",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-01",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/1",
+      "sha256": "496bbc7d723f67876bc0f35b96ceedaa7b20ec034167e17ebc223816bea70182",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-02",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/2",
+      "sha256": "422e89f5f611712e6eb5e5e9920d50a5caaba83c13e5bdf0798c816ceb84513a",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-03",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/3",
+      "sha256": "24e4bd74637e3daa39467302ce788a50678f9bdd66d9603a94d16bb76fc26aca",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-04",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/4",
+      "sha256": "57389fc67b3797ec4c5523e1cb682c1bd6949ebc9cab81fbec4ed14d6bb6c203",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-05",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/5",
+      "sha256": "994a47c7e0a25a3ad3ade007c00aa08baa9bab5eeb5ec9ad23ea769d25891828",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-06",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/6",
+      "sha256": "ba5dc6142c5da5fc71f369c12ba785418d3c305de0028781193c05cb1500d192",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-07",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/7",
+      "sha256": "b7137dc34dd398895b891d28b40b67179a56408a4543c1b7d9c81694dab1d317",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-08",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/8",
+      "sha256": "b6bdb6989098437df2df11cb2e0f16d145c138f66425b0848bd6ce575626fd77",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-09",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/9",
+      "sha256": "055f01da8702c5c08e5f345bd174a5e2c320c24fac8e0b970921a106a278d4fa",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-10",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/10",
+      "sha256": "399c88d06e8055d4f87b244d77c036491373712dea3aadc0621de030199b3256",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "XAUUSD",
+      "period": "2026-11",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/xauusd/2026/11",
+      "sha256": "fb0662238d3c596f2853bdae03b85d811b16a51a3b84fad05e48e3bc6dd5065a",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2026-06",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2026/6",
+      "sha256": "c600c87bb175515607d6e3f40ebd108f25166507c010c2dbb9fa1c03fcfedad7",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2026-07",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2026/7",
+      "sha256": "5889855eca2afae8a8af318f5ca3ede347bc91d6d4b03617ed6826f31befdfd4",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2026-08",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2026/8",
+      "sha256": "21252870432f1b8f7a22412497ac75f82cfb2763086a8054c7fdeae58e0b07f0",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2026-09",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2026/9",
+      "sha256": "3e3e74547fc2b4de40bb2505df13d5cb9e55238d0768bfbd7251cd5de28317d1",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2026-10",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2026/10",
+      "sha256": "b9e64f0755a5bad8e8fb0e1ba22d5764fabe2ceb1df576d01a1f4a7644baa8f7",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    },
+    {
+      "symbol": "WTIUSD",
+      "period": "2026-11",
+      "url": "https://www.histdata.com/download-free-forex-historical-data/?/ascii/1-minute-bar-quotes/wtiusd/2026/11",
+      "sha256": "8a8b8d08de1c50510165d33d5f886f215aa305f0abe7ebdf95b7662bb38042ee",
+      "integrity": "ZIP CRC verified; locally recorded SHA-256, no provider checksum supplied"
+    }
+  ],
+  "quality": {
+    "XAUUSD": {
+      "bars": 51681,
+      "start": "2018-01-01 23:00:00+00:00",
+      "last_open": "2026-11-06 21:00:00+00:00",
+      "max_gap_hours": 77.0,
+      "gaps_over_4h": 502,
+      "unexplained_midweek_gaps_over_4h": 22,
+      "partial_hour_bars": 229,
+      "volume": "unavailable; not used",
+      "price_side": "bid; assumed spread added to execution"
+    },
+    "WTIUSD": {
+      "bars": 36482,
+      "start": "2018-01-01 23:00:00+00:00",
+      "last_open": "2026-11-06 21:00:00+00:00",
+      "max_gap_hours": 22562.0,
+      "gaps_over_4h": 371,
+      "unexplained_midweek_gaps_over_4h": 26,
+      "partial_hour_bars": 4894,
+      "volume": "unavailable; not used",
+      "price_side": "bid; assumed spread added to execution"
+    },
+    "BTCUSDT": {
+      "bars": 12858,
+      "start": "2021-01-01 00:00:00+00:00",
+      "last_open": "2026-11-13 20:00:00+00:00",
+      "type": "Binance verified spot archive, 4h"
+    },
+    "ETHUSDT": {
+      "bars": 12858,
+      "start": "2021-01-01 00:00:00+00:00",
+      "last_open": "2026-11-13 20:00:00+00:00",
+      "type": "Binance verified spot archive, 4h"
+    },
+    "SOLUSDT": {
+      "bars": 12858,
+      "start": "2021-01-01 00:00:00+00:00",
+      "last_open": "2026-11-13 20:00:00+00:00",
+      "type": "Binance verified spot archive, 4h"
+    },
+    "WTI_REFERENCE": {
+      "bars": 1476,
+      "start": "2021-01-04 00:00:00+00:00",
+      "last_open": "2026-11-13 00:00:00+00:00",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/CL%3DF?period1=1609459200&period2=1794614400&interval=1d",
+      "sha256": "de92f078231fafc84df235f49d07a3b5e551cb7d80736000e71aafe6c3e927ba",
+      "type": "continuous front-month futures, direction only",
+      "warning": "Contract-roll price differences are not cash P&L. Not USOIL CFD execution data; 2020 negative-price period not included."
+    }
+  },
+  "context": {
+    "dollar": {
+      "symbol": "UUP",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/UUP?period1=1514764800&period2=1794614400&interval=1d&events=div%2Csplits",
+      "bars": 2230,
+      "sha256": "ffc8117678069c9022b5f3beb01ec5d8c94474ed1291a6bc526be98347f23f2f",
+      "type": "adjusted daily context, not CFD execution data"
+    },
+    "bonds": {
+      "symbol": "TLT",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/TLT?period1=1514764800&period2=1794614400&interval=1d&events=div%2Csplits",
+      "bars": 2230,
+      "sha256": "49b6ad5f457a88293c4ef81532438a0e0ee955efadc57b1595c28f7a037dd08d",
+      "type": "adjusted daily context, not CFD execution data"
+    },
+    "equities": {
+      "symbol": "SPY",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1514764800&period2=1794614400&interval=1d&events=div%2Csplits",
+      "bars": 2230,
+      "sha256": "04ef86c9430f03af5c718f411a9c4f13c4e5eb1345e5b8ac48f3598e1d1aee05",
+      "type": "adjusted daily context, not CFD execution data"
+    },
+    "oil": {
+      "symbol": "USO",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/USO?period1=1514764800&period2=1794614400&interval=1d&events=div%2Csplits",
+      "bars": 2230,
+      "sha256": "70b4c652a8c975b560699e4aedd770731245bc923000b04b5479196a3130b50a",
+      "type": "adjusted daily context, not CFD execution data"
+    },
+    "fear": {
+      "symbol": "^VIX",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?period1=1514764800&period2=1794614400&interval=1d&events=div%2Csplits",
+      "bars": 2232,
+      "sha256": "42ddce9850c1bf6bd16eb959d240153d0d39c511c2ffba5b422b78f923e4e48e",
+      "type": "adjusted daily context, not CFD execution data"
+    },
+    "gold": {
+      "symbol": "GLD",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?period1=1514764800&period2=1794614400&interval=1d&events=div%2Csplits",
+      "bars": 2230,
+      "sha256": "013cf0afaa9eddea8038454c6041b8750d797980b9fee45b40ede56d2f6092ac",
+      "type": "adjusted daily context, not CFD execution data"
+    }
+  },
+  "missing_periods": [
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 1
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 2
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 4
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 3
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 6
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 5
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 7
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 8
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 10
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 9
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 12
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2024,
+      "month": 11
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 2
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 1
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 4
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 3
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 5
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 6
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 7
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 8
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 10
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 9
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 12
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2025,
+      "month": 11
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2026,
+      "month": 1
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2026,
+      "month": 2
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2026,
+      "month": 3
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2026,
+      "month": 4
+    },
+    {
+      "symbol": "WTIUSD",
+      "year": 2026,
+      "month": 5
+    }
+  ]
+}

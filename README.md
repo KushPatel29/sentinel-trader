@@ -1,5 +1,29 @@
 # Sentinel Trader
 
+## Public research release v3
+
+Open [Sentinel live](https://sentinel-trader-kp.streamlit.app/) for public BTC, ETH and SOL quotes, research probabilities, the complete accuracy comparison and commodity-data readiness. The website submits no trading orders. The original asset analyzer remains available in the sidebar.
+
+The [v3 monthly-refit experiment](crypto_lab/accuracy_evidence/RESULTS.md) raised matched-date gold direction accuracy from **49.31% to 51.88%** and reduced Brier loss from 0.25540 to 0.24996. The descriptive improvement interval includes zero, and these dates were already inspected: this is exploratory evidence, not fresh proof of skill or profitability. BTC/ETH accuracy was unchanged; SOL declined from 48.40% to 48.08%. All candidate scores and uncertainty are published.
+
+Gold and oil CFD live signals remain disabled until current broker-specific data and execution terms are validated. Hosted prices refresh while the page is open; the separate continuous paper processes run locally. See [deployment, operation and rollback](crypto_lab/docs/PUBLIC_RELEASE.md).
+
+## Gold, USOIL-style CFDs and crypto focus
+
+The [focused upgrade](crypto_lab/docs/FOCUS_RESEARCH.md) adds real XAUUSD and WTI reference minute-data ingestion, hourly session-aware CFD research, long/short accounting, causal market-context features, chronological probability calibration, bounded model tuning, broker bid/ask CSV import and a separate prospective challenger observer. Open **Gold & oil research** in the Streamlit sidebar or the first tab of the local monitor.
+
+**The v2 tuning did not establish a general accuracy improvement.** Gold's v2 final retrospective direction accuracy was 49.3%; the selected ETH policy lost 1.17%. The WTI CFD reference source has a 940-day gap, so current CFD qualification is blocked. A separate daily `CL=F` direction study is clearly labeled and has no USOIL trading-P&L claim. No candidate is proven best in class or approved for broker execution. The original paper ledger is preserved.
+
+See the [new results and limitations](crypto_lab/focus_evidence/RESULTS.md), [all model/strategy attempts](crypto_lab/focus_evidence/summary.json), and [broker-input template](crypto_lab/broker_profile.example.json). No passwords or exchange keys are required for these research workflows.
+
+## Crypto research and continuous local paper simulation
+
+The new [Crypto Lab](crypto_lab/README.md) tests BTC, ETH and SOL on 38,595 real four-hour candles. It includes 20 predeclared candidates, chronological model calibration, purged walk-forward validation, a frozen six-month test, fee/slippage stress tests, all 780 validation attempts, and a restartable local forward paper worker. Open **Crypto Research** in the Streamlit sidebar, or run its dedicated local monitor at port 8502.
+
+**Current evidence: no profitable edge established.** The frozen test selected cash: 0.00% net, versus −15.70% for full-exposure buy & hold and −5.17% for the volatility-matched baseline. The separate forward experiment tracks actual future observations; its results must not be presented as historical earnings. This crypto package accepts no exchange keys and has no real-money order client.
+
+See the [primary-source research review](crypto_lab/docs/RESEARCH.md), [sealed evidence](crypto_lab/evidence/summary.json), and [local start/stop instructions](crypto_lab/README.md). The existing US-equity code below is preserved; its historical performance claims are separate from this crypto experiment.
+
 An intraday trading bot for US equities on [Alpaca](https://alpaca.markets). It combines a LightGBM probability model, chart-pattern features, a market-regime filter and real-time news sentiment, with an independent risk officer that can veto any trade or shut the bot down.
 
 It runs in **paper trading by default**. Real money takes three separate switches (see [Safety](#safety)).

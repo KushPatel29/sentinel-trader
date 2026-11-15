@@ -1,0 +1,65 @@
+{
+  "purpose": "No automatic execution promotion; diagnostics alone do not establish investment suitability.",
+  "assets": {
+    "XAUUSD": {
+      "at_least_300_nonoverlapping_forecasts": true,
+      "positive_brier_skill_vs_prior": false,
+      "descriptive_brier_improvement_ci_above_zero": false,
+      "positive_return_at_four_times_costs": false,
+      "current_reference_data": false,
+      "broker_execution_validated": false,
+      "independent_future_record": false,
+      "promote_to_execution": false
+    },
+    "WTIUSD": {
+      "at_least_300_nonoverlapping_forecasts": false,
+      "positive_brier_skill_vs_prior": false,
+      "descriptive_brier_improvement_ci_above_zero": false,
+      "positive_return_at_four_times_costs": false,
+      "current_reference_data": false,
+      "broker_execution_validated": false,
+      "independent_future_record": false,
+      "promote_to_execution": false
+    },
+    "WTI_REFERENCE": {
+      "at_least_300_nonoverlapping_forecasts": false,
+      "positive_brier_skill_vs_prior": false,
+      "descriptive_brier_improvement_ci_above_zero": false,
+      "positive_return_at_four_times_costs": false,
+      "current_reference_data": true,
+      "broker_execution_validated": false,
+      "independent_future_record": false,
+      "promote_to_execution": false
+    },
+    "BTCUSDT": {
+      "at_least_300_nonoverlapping_forecasts": true,
+      "positive_brier_skill_vs_prior": false,
+      "descriptive_brier_improvement_ci_above_zero": false,
+      "positive_return_at_four_times_costs": false,
+      "current_reference_data": true,
+      "broker_execution_validated": false,
+      "independent_future_record": false,
+      "promote_to_execution": false
+    },
+    "ETHUSDT": {
+      "at_least_300_nonoverlapping_forecasts": true,
+      "positive_brier_skill_vs_prior": false,
+      "descriptive_brier_improvement_ci_above_zero": false,
+      "positive_return_at_four_times_costs": false,
+      "current_reference_data": true,
+      "broker_execution_validated": false,
+      "independent_future_record": false,
+      "promote_to_execution": false
+    },
+    "SOLUSDT": {
+      "at_least_300_nonoverlapping_forecasts": true,
+      "positive_brier_skill_vs_prior": false,
+      "descriptive_brier_improvement_ci_above_zero": false,
+      "positive_return_at_four_times_costs": false,
+      "current_reference_data": true,
+      "broker_execution_validated": false,
+      "independent_future_record": false,
+      "promote_to_execution": false
+    }
+  }
+}

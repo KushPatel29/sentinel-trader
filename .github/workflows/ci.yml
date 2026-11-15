@@ -5,6 +5,32 @@ on:
   pull_request:
 
 jobs:
+  public-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q crypto_lab/tests/test_accuracy_release.py
+        env:
+          PYTHONPATH: crypto_lab
+  crypto-lab:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12"]
+    defaults:
+      run:
+        working-directory: crypto_lab
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[dev,dashboard]"
+      - run: python -m pytest -q
   test:
     runs-on: ubuntu-latest
     strategy:

@@ -1,0 +1,1352 @@
+{
+  "version": "focus-gold-oil-crypto-2026-11-15-v2",
+  "protocol_sha256": "d5e329ead7af7b42d4bfce436a693437adec90b1df1fdeb1d8d88136691b58a3",
+  "created_utc": "2026-11-15T18:31:54.615827+00:00",
+  "protocol": {
+    "version": "focus-gold-oil-crypto-2026-11-15-v2",
+    "purpose": "Retrospective research and prospective observation; no broker execution approval",
+    "start": "2018-01-01",
+    "cutoff": "2026-11-14T00:00:00Z",
+    "first_development_test": "2021-01-01T00:00:00Z",
+    "final_start": "2025-11-14T00:00:00Z",
+    "train_days": 730,
+    "calibration_days": 120,
+    "validation_days": 180,
+    "test_days": 180,
+    "seed": 29,
+    "target_annual_vol": 0.2,
+    "max_exposure": 0.6,
+    "daily_loss_limit": 0.02,
+    "drawdown_limit": 0.15,
+    "min_validation_trades": 12,
+    "models": [
+      "prior",
+      "logistic_strong",
+      "logistic",
+      "hist_small",
+      "hist_medium",
+      "extra_trees"
+    ],
+    "feature_sets": [
+      "price",
+      "context"
+    ],
+    "entry_thresholds": [
+      0.53,
+      0.57
+    ],
+    "directions": [
+      "long_only",
+      "long_short"
+    ],
+    "stress_multipliers": [
+      1,
+      2,
+      4
+    ],
+    "assets": {
+      "XAUUSD": {
+        "name": "Spot gold reference",
+        "source": "histdata",
+        "interval": "1h",
+        "horizon_bars": 4,
+        "annual_bars": 5796,
+        "half_spread_bps": 1.0,
+        "slippage_bps": 0.5,
+        "fee_bps": 0.0,
+        "intraday_only": true,
+        "decision_start_hour": 7,
+        "last_entry_hour": 15,
+        "flatten_hour": 20,
+        "execution_ready": false
+      },
+      "WTIUSD": {
+        "name": "WTI crude reference (USOIL-style CFD)",
+        "source": "histdata",
+        "interval": "1h",
+        "horizon_bars": 4,
+        "annual_bars": 5796,
+        "half_spread_bps": 4.0,
+        "slippage_bps": 1.0,
+        "fee_bps": 0.0,
+        "intraday_only": true,
+        "decision_start_hour": 7,
+        "last_entry_hour": 15,
+        "flatten_hour": 20,
+        "execution_ready": false
+      },
+      "WTI_REFERENCE": {
+        "name": "WTI daily futures reference (direction study only)",
+        "source": "yahoo_futures",
+        "ticker": "CL=F",
+        "interval": "1d",
+        "horizon_bars": 3,
+        "annual_bars": 252,
+        "half_spread_bps": 4.0,
+        "slippage_bps": 1.0,
+        "fee_bps": 0.0,
+        "intraday_only": false,
+        "direction_only": true,
+        "execution_ready": false
+      },
+      "BTCUSDT": {
+        "name": "Bitcoin spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 0.25,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      },
+      "ETHUSDT": {
+        "name": "Ethereum spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 0.5,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      },
+      "SOLUSDT": {
+        "name": "Solana spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 1.0,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      }
+    },
+    "context_symbols": {
+      "dollar": "UUP",
+      "bonds": "TLT",
+      "equities": "SPY",
+      "fear": "^VIX",
+      "gold": "GLD",
+      "oil": "USO"
+    },
+    "notes": [
+      "CFD data is a public reference feed, not the user's selected broker.",
+      "Do not reuse v1's inspected crypto history as a newly untouched test.",
+      "Crypto short signals are diagnostics only; spot execution remains long or cash.",
+      "Commodities are flattened intraday to exclude unverified overnight financing and roll credits."
+    ]
+  },
+  "assets": {
+    "XAUUSD": {
+      "name": "Spot gold reference",
+      "spec": {
+        "name": "Spot gold reference",
+        "source": "histdata",
+        "interval": "1h",
+        "horizon_bars": 4,
+        "annual_bars": 5796,
+        "half_spread_bps": 1.0,
+        "slippage_bps": 0.5,
+        "fee_bps": 0.0,
+        "intraday_only": true,
+        "decision_start_hour": 7,
+        "last_entry_hour": 15,
+        "flatten_hour": 20,
+        "execution_ready": false
+      },
+      "data": {
+        "bars": 51681,
+        "start": "2018-01-01 23:00:00+00:00",
+        "last_open": "2026-11-06 21:00:00+00:00",
+        "max_gap_hours": 77.0,
+        "gaps_over_4h": 502,
+        "unexplained_midweek_gaps_over_4h": 22,
+        "partial_hour_bars": 229,
+        "volume": "unavailable; not used",
+        "price_side": "bid; assumed spread added to execution"
+      },
+      "status": "RESEARCH_ONLY",
+      "stale_days_at_cutoff": 7.083333333333333,
+      "blocked_windows": [
+        {
+          "phase": "development",
+          "start": "2023-12-17 00:00:00+00:00",
+          "reason": "Insufficient chronological samples: 3847 training, 2 calibration"
+        }
+      ],
+      "development_predictions": {
+        "samples": 2034,
+        "accuracy": 0.4941002949852507,
+        "balanced_accuracy": 0.4913416940332074,
+        "auc": 0.4981263391065046,
+        "brier": 0.2513920550482771,
+        "prior_accuracy": 0.4916420845624385,
+        "prior_brier": 0.2510611087312176,
+        "price_only_accuracy": 0.5009832841691249,
+        "price_only_brier": 0.25105455621028033,
+        "mean_predicted": 0.5098674012536305,
+        "observed_up_rate": 0.5108161258603736,
+        "brier_skill_vs_prior": -0.0013181902953109947,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 1019,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.02453385672227674,
+            0.030924926398429767
+          ],
+          "prob_mean_positive": 0.5575,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 1019,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.0018796462938206052,
+            0.0012735089417167684
+          ],
+          "prob_mean_positive": 0.3385,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(-0.001, 0.4]",
+            "predicted": 0.3951251876654235,
+            "actual_up": 0.0,
+            "samples": 1
+          },
+          {
+            "bucket": "(0.4, 0.45]",
+            "predicted": 0.43892420217360295,
+            "actual_up": 0.5128205128205128,
+            "samples": 78
+          },
+          {
+            "bucket": "(0.45, 0.5]",
+            "predicted": 0.47509559498501736,
+            "actual_up": 0.5108695652173914,
+            "samples": 736
+          },
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5222783301248806,
+            "actual_up": 0.5082174462705437,
+            "samples": 791
+          },
+          {
+            "bucket": "(0.55, 0.6]",
+            "predicted": 0.5599218788666467,
+            "actual_up": 0.5163551401869159,
+            "samples": 428
+          }
+        ],
+        "confident_coverage": 0.014749262536873156,
+        "confident_accuracy": 0.5
+      },
+      "final_predictions": {
+        "samples": 505,
+        "accuracy": 0.49306930693069306,
+        "balanced_accuracy": 0.5100969432865985,
+        "auc": 0.5102627257799671,
+        "brier": 0.2554037209437733,
+        "prior_accuracy": 0.4594059405940594,
+        "prior_brier": 0.251804412857846,
+        "price_only_accuracy": 0.499009900990099,
+        "price_only_brier": 0.2554221551631704,
+        "mean_predicted": 0.5438006430408794,
+        "observed_up_rate": 0.4594059405940594,
+        "brier_skill_vs_prior": -0.014294062781017525,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 253,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.009881422924901186,
+            0.07905138339920949
+          ],
+          "prob_mean_positive": 0.939,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 253,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.005949362702915719,
+            -0.0013092570032708153
+          ],
+          "prob_mean_positive": 0.0,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.535807179419583,
+            "actual_up": 0.446064139941691,
+            "samples": 343
+          },
+          {
+            "bucket": "(0.55, 0.6]",
+            "predicted": 0.5607250752760935,
+            "actual_up": 0.4876543209876543,
+            "samples": 162
+          }
+        ],
+        "confident_coverage": 0.04950495049504951,
+        "confident_accuracy": 0.48
+      },
+      "final_trading": {
+        "policy": "cash",
+        "metrics": {
+          "total_return": 0.0,
+          "cagr": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "mean_exposure": 0.0,
+          "calendar_days": 357.9166666666667,
+          "bars": 5789,
+          "round_trips": 0,
+          "entries": 0,
+          "win_rate": null,
+          "overnight_cfd_carries": 0,
+          "estimated_cost_fraction": 0.0
+        },
+        "stress_4x": {
+          "total_return": 0.0,
+          "cagr": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "mean_exposure": 0.0,
+          "calendar_days": 357.9166666666667,
+          "bars": 5789
+        },
+        "baseline": {
+          "total_return": -0.13715782245316688,
+          "cagr": -0.13967326531224844,
+          "sharpe": -1.847155112827772,
+          "max_drawdown": -0.14817493794273318,
+          "mean_exposure": 0.12054284073436751,
+          "calendar_days": 357.9166666666667,
+          "bars": 5789,
+          "round_trips": 150,
+          "entries": 150,
+          "win_rate": 0.44666666666666666,
+          "overnight_cfd_carries": 1,
+          "estimated_cost_fraction": 0.0230817738416586
+        }
+      },
+      "latest_model": "hist_small:context",
+      "execution_ready": false,
+      "best_in_class_proven": false,
+      "test_interpretation": "New asset retrospective study. Reference quotes and assumed execution costs; independent broker replay still required."
+    },
+    "WTIUSD": {
+      "name": "WTI crude reference (USOIL-style CFD)",
+      "spec": {
+        "name": "WTI crude reference (USOIL-style CFD)",
+        "source": "histdata",
+        "interval": "1h",
+        "horizon_bars": 4,
+        "annual_bars": 5796,
+        "half_spread_bps": 4.0,
+        "slippage_bps": 1.0,
+        "fee_bps": 0.0,
+        "intraday_only": true,
+        "decision_start_hour": 7,
+        "last_entry_hour": 15,
+        "flatten_hour": 20,
+        "execution_ready": false
+      },
+      "data": {
+        "bars": 36482,
+        "start": "2018-01-01 23:00:00+00:00",
+        "last_open": "2026-11-06 21:00:00+00:00",
+        "max_gap_hours": 22562.0,
+        "gaps_over_4h": 371,
+        "unexplained_midweek_gaps_over_4h": 26,
+        "partial_hour_bars": 4894,
+        "volume": "unavailable; not used",
+        "price_side": "bid; assumed spread added to execution"
+      },
+      "status": "DATA_BLOCKED",
+      "stale_days_at_cutoff": 7.083333333333333,
+      "blocked_windows": [
+        {
+          "phase": "development",
+          "start": "2023-12-17 00:00:00+00:00",
+          "end": "2024-06-14 00:00:00+00:00",
+          "day_coverage": 0.8177150192554558,
+          "max_gap_days": 3.0833333333333335,
+          "required_start": "2021-06-20 00:00:00+00:00",
+          "required_end": "2024-06-14 00:00:00+00:00",
+          "actual_start": "2021-06-20 23:00:00+00:00",
+          "actual_last_open": "2023-12-01 21:00:00+00:00",
+          "reason": "insufficient coverage or a gap over seven days; no splicing/imputation"
+        },
+        {
+          "phase": "development",
+          "start": "2024-06-14 00:00:00+00:00",
+          "end": "2024-12-11 00:00:00+00:00",
+          "day_coverage": 0.6529562982005142,
+          "max_gap_days": 3.0833333333333335,
+          "required_start": "2021-12-17 00:00:00+00:00",
+          "required_end": "2024-12-11 00:00:00+00:00",
+          "actual_start": "2021-12-17 00:00:00+00:00",
+          "actual_last_open": "2023-12-01 21:00:00+00:00",
+          "reason": "insufficient coverage or a gap over seven days; no splicing/imputation"
+        },
+        {
+          "phase": "development",
+          "start": "2024-12-11 00:00:00+00:00",
+          "end": "2025-06-09 00:00:00+00:00",
+          "day_coverage": 0.4910025706940874,
+          "max_gap_days": 3.0833333333333335,
+          "required_start": "2022-06-15 00:00:00+00:00",
+          "required_end": "2025-06-09 00:00:00+00:00",
+          "actual_start": "2022-06-15 00:00:00+00:00",
+          "actual_last_open": "2023-12-01 21:00:00+00:00",
+          "reason": "insufficient coverage or a gap over seven days; no splicing/imputation"
+        },
+        {
+          "phase": "development",
+          "start": "2025-06-09 00:00:00+00:00",
+          "end": "2025-11-14 00:00:00+00:00",
+          "day_coverage": 0.3324607329842932,
+          "max_gap_days": 3.0833333333333335,
+          "required_start": "2022-12-12 00:00:00+00:00",
+          "required_end": "2025-11-14 00:00:00+00:00",
+          "actual_start": "2022-12-12 00:00:00+00:00",
+          "actual_last_open": "2023-12-01 21:00:00+00:00",
+          "reason": "insufficient coverage or a gap over seven days; no splicing/imputation"
+        },
+        {
+          "phase": "final_retrospective",
+          "start": "2025-11-14 00:00:00+00:00",
+          "end": "2026-11-14 00:00:00+00:00",
+          "day_coverage": 0.25905598243688255,
+          "max_gap_days": 940.0833333333334,
+          "required_start": "2023-05-19 00:00:00+00:00",
+          "required_end": "2026-11-14 00:00:00+00:00",
+          "actual_start": "2023-05-19 00:00:00+00:00",
+          "actual_last_open": "2026-11-06 21:00:00+00:00",
+          "reason": "insufficient coverage or a gap over seven days; no splicing/imputation"
+        }
+      ],
+      "development_predictions": {
+        "samples": 1283,
+        "accuracy": 0.505066250974279,
+        "balanced_accuracy": 0.4971024911240868,
+        "auc": 0.4747904502019698,
+        "brier": 0.2502986373499255,
+        "prior_accuracy": 0.5159781761496492,
+        "prior_brier": 0.24974028468829002,
+        "price_only_accuracy": 0.5011691348402182,
+        "price_only_brier": 0.25016342217245924,
+        "mean_predicted": 0.5204192612232937,
+        "observed_up_rate": 0.539360872954014,
+        "brier_skill_vs_prior": -0.0022357332631874893,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 643,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.048989113530326596,
+            0.029548989113530325
+          ],
+          "prob_mean_positive": 0.3115,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 643,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.002174220006034202,
+            0.0008841496217327601
+          ],
+          "prob_mean_positive": 0.2295,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(0.4, 0.45]",
+            "predicted": 0.4367381668732201,
+            "actual_up": 0.5,
+            "samples": 8
+          },
+          {
+            "bucket": "(0.45, 0.5]",
+            "predicted": 0.4881428623356921,
+            "actual_up": 0.5945945945945946,
+            "samples": 222
+          },
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5240798844812352,
+            "actual_up": 0.531540847983454,
+            "samples": 967
+          },
+          {
+            "bucket": "(0.55, 0.6]",
+            "predicted": 0.568982192061853,
+            "actual_up": 0.4819277108433735,
+            "samples": 83
+          },
+          {
+            "bucket": "(0.6, 1.0]",
+            "predicted": 0.6085070471627315,
+            "actual_up": 0.6666666666666666,
+            "samples": 3
+          }
+        ],
+        "confident_coverage": 0.034294621979735,
+        "confident_accuracy": 0.4772727272727273
+      },
+      "final_predictions": {
+        "samples": 0
+      },
+      "final_trading": null,
+      "latest_model": null,
+      "execution_ready": false,
+      "best_in_class_proven": false,
+      "test_interpretation": "New asset retrospective study. Reference quotes and assumed execution costs; independent broker replay still required."
+    },
+    "WTI_REFERENCE": {
+      "name": "WTI daily futures reference (direction study only)",
+      "spec": {
+        "name": "WTI daily futures reference (direction study only)",
+        "source": "yahoo_futures",
+        "ticker": "CL=F",
+        "interval": "1d",
+        "horizon_bars": 3,
+        "annual_bars": 252,
+        "half_spread_bps": 4.0,
+        "slippage_bps": 1.0,
+        "fee_bps": 0.0,
+        "intraday_only": false,
+        "direction_only": true,
+        "execution_ready": false
+      },
+      "data": {
+        "bars": 1476,
+        "start": "2021-01-04 00:00:00+00:00",
+        "last_open": "2026-11-13 00:00:00+00:00",
+        "url": "https://query1.finance.yahoo.com/v8/finance/chart/CL%3DF?period1=1609459200&period2=1794614400&interval=1d",
+        "sha256": "de92f078231fafc84df235f49d07a3b5e551cb7d80736000e71aafe6c3e927ba",
+        "type": "continuous front-month futures, direction only",
+        "warning": "Contract-roll price differences are not cash P&L. Not USOIL CFD execution data; 2020 negative-price period not included."
+      },
+      "status": "DIRECTION_ONLY",
+      "stale_days_at_cutoff": 0.0,
+      "blocked_windows": [],
+      "development_predictions": {
+        "samples": 141,
+        "accuracy": 0.5460992907801419,
+        "balanced_accuracy": 0.515827922077922,
+        "auc": 0.5428165584415585,
+        "brier": 0.25289833841551257,
+        "prior_accuracy": 0.5460992907801419,
+        "prior_brier": 0.2476702025654557,
+        "price_only_accuracy": 0.5460992907801419,
+        "price_only_brier": 0.2483875265256507,
+        "mean_predicted": 0.5138156472276624,
+        "observed_up_rate": 0.5460992907801419,
+        "brier_skill_vs_prior": -0.021109264642665826,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 141,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.0425531914893617,
+            0.0425531914893617
+          ],
+          "prob_mean_positive": 0.4675,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 141,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.016191481818622743,
+            0.0023982127270717316
+          ],
+          "prob_mean_positive": 0.16,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(-0.001, 0.4]",
+            "predicted": 0.30966291502778204,
+            "actual_up": 0.6,
+            "samples": 10
+          },
+          {
+            "bucket": "(0.4, 0.45]",
+            "predicted": 0.43730992283860104,
+            "actual_up": 0.25,
+            "samples": 4
+          },
+          {
+            "bucket": "(0.45, 0.5]",
+            "predicted": 0.4752580076229859,
+            "actual_up": 0.5263157894736842,
+            "samples": 19
+          },
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5264627897667403,
+            "actual_up": 0.5,
+            "samples": 60
+          },
+          {
+            "bucket": "(0.55, 0.6]",
+            "predicted": 0.5597818280054513,
+            "actual_up": 0.6304347826086957,
+            "samples": 46
+          },
+          {
+            "bucket": "(0.6, 1.0]",
+            "predicted": 0.61725189918813,
+            "actual_up": 0.5,
+            "samples": 2
+          }
+        ],
+        "confident_coverage": 0.1276595744680851,
+        "confident_accuracy": 0.4444444444444444
+      },
+      "final_predictions": {
+        "samples": 62,
+        "accuracy": 0.41935483870967744,
+        "balanced_accuracy": 0.4642857142857143,
+        "auc": 0.5105042016806722,
+        "brier": 0.2640197759945531,
+        "prior_accuracy": 0.5483870967741935,
+        "prior_brier": 0.24777666630079506,
+        "price_only_accuracy": 0.41935483870967744,
+        "price_only_brier": 0.2640197759945531,
+        "mean_predicted": 0.41818216170765715,
+        "observed_up_rate": 0.5483870967741935,
+        "brier_skill_vs_prior": -0.06555544529782042,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 62,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.3548387096774194,
+            0.12903225806451613
+          ],
+          "prob_mean_positive": 0.139,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 62,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.044670407051692,
+            0.012739433959246213
+          ],
+          "prob_mean_positive": 0.14,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(-0.001, 0.4]",
+            "predicted": 0.3560268756105033,
+            "actual_up": 0.4666666666666667,
+            "samples": 15
+          },
+          {
+            "bucket": "(0.4, 0.45]",
+            "predicted": 0.4287730430320148,
+            "actual_up": 0.6,
+            "samples": 35
+          },
+          {
+            "bucket": "(0.45, 0.5]",
+            "predicted": 0.4649861987997228,
+            "actual_up": 0.5,
+            "samples": 12
+          }
+        ],
+        "confident_coverage": 0.5,
+        "confident_accuracy": 0.45161290322580644
+      },
+      "final_trading": null,
+      "latest_model": "logistic_strong:price",
+      "execution_ready": false,
+      "best_in_class_proven": false,
+      "test_interpretation": "New asset retrospective study. Reference quotes and assumed execution costs; independent broker replay still required."
+    },
+    "BTCUSDT": {
+      "name": "Bitcoin spot",
+      "spec": {
+        "name": "Bitcoin spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 0.25,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      },
+      "data": {
+        "bars": 12858,
+        "start": "2021-01-01 00:00:00+00:00",
+        "last_open": "2026-11-13 20:00:00+00:00",
+        "type": "Binance verified spot archive, 4h"
+      },
+      "status": "RESEARCH_ONLY",
+      "stale_days_at_cutoff": 0.0,
+      "blocked_windows": [],
+      "development_predictions": {
+        "samples": 717,
+        "accuracy": 0.5104602510460251,
+        "balanced_accuracy": 0.5066938845607406,
+        "auc": 0.5233563878784094,
+        "brier": 0.24892837926120018,
+        "prior_accuracy": 0.48675034867503486,
+        "prior_brier": 0.2501855382028986,
+        "price_only_accuracy": 0.5062761506276151,
+        "price_only_brier": 0.24955476595816123,
+        "mean_predicted": 0.5248410415292255,
+        "observed_up_rate": 0.5285913528591353,
+        "brier_skill_vs_prior": 0.005024906518293237,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.023709902370990237,
+            0.07252440725244072
+          ],
+          "prob_mean_positive": 0.8195,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.002337848199964979,
+            0.0047012976285442185
+          ],
+          "prob_mean_positive": 0.7645,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "v1_ensemble_accuracy": 0.5160390516039052,
+        "v1_ensemble_brier": 0.25242733704225745,
+        "brier_improvement_vs_v1_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            1.5677138068356325e-05,
+            0.006905657761298331
+          ],
+          "prob_mean_positive": 0.9755,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(-0.001, 0.4]",
+            "predicted": 0.3831903067535254,
+            "actual_up": 0.0,
+            "samples": 1
+          },
+          {
+            "bucket": "(0.4, 0.45]",
+            "predicted": 0.43178305960794605,
+            "actual_up": 0.5357142857142857,
+            "samples": 28
+          },
+          {
+            "bucket": "(0.45, 0.5]",
+            "predicted": 0.4788135594035764,
+            "actual_up": 0.49624060150375937,
+            "samples": 133
+          },
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5235648406940979,
+            "actual_up": 0.5311720698254364,
+            "samples": 401
+          },
+          {
+            "bucket": "(0.55, 0.6]",
+            "predicted": 0.5727128495105601,
+            "actual_up": 0.5585585585585585,
+            "samples": 111
+          },
+          {
+            "bucket": "(0.6, 1.0]",
+            "predicted": 0.6194204647906404,
+            "actual_up": 0.5348837209302325,
+            "samples": 43
+          }
+        ],
+        "confident_coverage": 0.15481171548117154,
+        "confident_accuracy": 0.5765765765765766
+      },
+      "final_predictions": {
+        "samples": 312,
+        "accuracy": 0.49038461538461536,
+        "balanced_accuracy": 0.5,
+        "auc": 0.5,
+        "brier": 0.2514591891828939,
+        "prior_accuracy": 0.49038461538461536,
+        "prior_brier": 0.2514591891828939,
+        "price_only_accuracy": 0.49038461538461536,
+        "price_only_brier": 0.2514591891828939,
+        "mean_predicted": 0.5297755382501145,
+        "observed_up_rate": 0.49038461538461536,
+        "brier_skill_vs_prior": 0.0,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            0.0,
+            0.0
+          ],
+          "prob_mean_positive": 0.0,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            0.0,
+            0.0
+          ],
+          "prob_mean_positive": 0.0,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "v1_ensemble_accuracy": 0.5256410256410257,
+        "v1_ensemble_brier": 0.24997574671311115,
+        "brier_improvement_vs_v1_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.004263998455469603,
+            0.001091359548328482
+          ],
+          "prob_mean_positive": 0.137,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5297755382501145,
+            "actual_up": 0.49038461538461536,
+            "samples": 312
+          }
+        ],
+        "confident_coverage": 0.0,
+        "confident_accuracy": null
+      },
+      "final_trading": {
+        "policy": "cash",
+        "metrics": {
+          "total_return": 0.0,
+          "cagr": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "mean_exposure": 0.0,
+          "calendar_days": 365.0,
+          "bars": 2190,
+          "round_trips": 0,
+          "entries": 0,
+          "win_rate": null,
+          "overnight_cfd_carries": 0,
+          "estimated_cost_fraction": 0.0
+        },
+        "stress_4x": {
+          "total_return": 0.0,
+          "cagr": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "mean_exposure": 0.0,
+          "calendar_days": 365.0,
+          "bars": 2190
+        },
+        "baseline": {
+          "total_return": -0.1756378757007282,
+          "cagr": -0.1756378757007282,
+          "sharpe": -0.8919153345843662,
+          "max_drawdown": -0.23618968541674257,
+          "mean_exposure": 0.45676475460439636,
+          "calendar_days": 365.0,
+          "bars": 2190,
+          "round_trips": 1,
+          "entries": 1,
+          "win_rate": 0.0,
+          "overnight_cfd_carries": 0,
+          "estimated_cost_fraction": 0.009356060908626824
+        }
+      },
+      "latest_model": "prior:price",
+      "execution_ready": false,
+      "best_in_class_proven": false,
+      "test_interpretation": "Exploratory: crypto dates were inspected in v1; not a new untouched test."
+    },
+    "ETHUSDT": {
+      "name": "Ethereum spot",
+      "spec": {
+        "name": "Ethereum spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 0.5,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      },
+      "data": {
+        "bars": 12858,
+        "start": "2021-01-01 00:00:00+00:00",
+        "last_open": "2026-11-13 20:00:00+00:00",
+        "type": "Binance verified spot archive, 4h"
+      },
+      "status": "RESEARCH_ONLY",
+      "stale_days_at_cutoff": 0.0,
+      "blocked_windows": [],
+      "development_predictions": {
+        "samples": 717,
+        "accuracy": 0.5146443514644351,
+        "balanced_accuracy": 0.49627443920917924,
+        "auc": 0.5007748540300238,
+        "brier": 0.24972146148536561,
+        "prior_accuracy": 0.5216178521617852,
+        "prior_brier": 0.24994525822241703,
+        "price_only_accuracy": 0.5341701534170153,
+        "price_only_brier": 0.2506890336545736,
+        "mean_predicted": 0.5104843104137277,
+        "observed_up_rate": 0.5383542538354253,
+        "brier_skill_vs_prior": 0.0008953830076354752,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.0502092050209205,
+            0.03626220362622036
+          ],
+          "prob_mean_positive": 0.352,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.002527005302231393,
+            0.0029656311736765925
+          ],
+          "prob_mean_positive": 0.584,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "v1_ensemble_accuracy": 0.5258019525801952,
+        "v1_ensemble_brier": 0.24854204271565503,
+        "brier_improvement_vs_v1_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.005282581217619435,
+            0.0030571937807686825
+          ],
+          "prob_mean_positive": 0.2925,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(-0.001, 0.4]",
+            "predicted": 0.394773759905847,
+            "actual_up": 0.42857142857142855,
+            "samples": 7
+          },
+          {
+            "bucket": "(0.4, 0.45]",
+            "predicted": 0.43151248481974575,
+            "actual_up": 0.5263157894736842,
+            "samples": 57
+          },
+          {
+            "bucket": "(0.45, 0.5]",
+            "predicted": 0.47667298321613266,
+            "actual_up": 0.5441176470588235,
+            "samples": 136
+          },
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5166357317280202,
+            "actual_up": 0.5339805825242718,
+            "samples": 412
+          },
+          {
+            "bucket": "(0.55, 0.6]",
+            "predicted": 0.5703218851274924,
+            "actual_up": 0.5444444444444444,
+            "samples": 90
+          },
+          {
+            "bucket": "(0.6, 1.0]",
+            "predicted": 0.6431470507842385,
+            "actual_up": 0.6666666666666666,
+            "samples": 15
+          }
+        ],
+        "confident_coverage": 0.12412831241283125,
+        "confident_accuracy": 0.5730337078651685
+      },
+      "final_predictions": {
+        "samples": 312,
+        "accuracy": 0.4967948717948718,
+        "balanced_accuracy": 0.5,
+        "auc": 0.5,
+        "brier": 0.25027695115701826,
+        "prior_accuracy": 0.4967948717948718,
+        "prior_brier": 0.25027695115701826,
+        "price_only_accuracy": 0.4967948717948718,
+        "price_only_brier": 0.25027695115701826,
+        "mean_predicted": 0.5137425561154376,
+        "observed_up_rate": 0.4967948717948718,
+        "brier_skill_vs_prior": 0.0,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            0.0,
+            0.0
+          ],
+          "prob_mean_positive": 0.0,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            0.0,
+            0.0
+          ],
+          "prob_mean_positive": 0.0,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "v1_ensemble_accuracy": 0.4775641025641026,
+        "v1_ensemble_brier": 0.25643324586461874,
+        "brier_improvement_vs_v1_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.001043081885745758,
+            0.013573741237182845
+          ],
+          "prob_mean_positive": 0.9525,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5137425561154375,
+            "actual_up": 0.4967948717948718,
+            "samples": 312
+          }
+        ],
+        "confident_coverage": 0.0,
+        "confident_accuracy": null
+      },
+      "final_trading": {
+        "policy": "trend_slow_long",
+        "metrics": {
+          "total_return": -0.011672747493228108,
+          "cagr": -0.011672747493228108,
+          "sharpe": -0.05134228562405587,
+          "max_drawdown": -0.11327975158768777,
+          "mean_exposure": 0.12453095767041814,
+          "calendar_days": 365.0,
+          "bars": 2190,
+          "round_trips": 21,
+          "entries": 21,
+          "win_rate": 0.23809523809523808,
+          "overnight_cfd_carries": 0,
+          "estimated_cost_fraction": 0.027365816256787433
+        },
+        "stress_4x": {
+          "total_return": -0.11906369397147953,
+          "cagr": -0.11906369397147953,
+          "sharpe": -1.4373217878637634,
+          "max_drawdown": -0.1516584304555636,
+          "mean_exposure": 0.07657286686020698,
+          "calendar_days": 365.0,
+          "bars": 2190
+        },
+        "baseline": {
+          "total_return": -0.15877925756309075,
+          "cagr": -0.15877925756309075,
+          "sharpe": -0.7660213495090429,
+          "max_drawdown": -0.26657827888469776,
+          "mean_exposure": 0.333991889520532,
+          "calendar_days": 365.0,
+          "bars": 2190,
+          "round_trips": 1,
+          "entries": 1,
+          "win_rate": 0.0,
+          "overnight_cfd_carries": 0,
+          "estimated_cost_fraction": 0.0084849948319313
+        }
+      },
+      "latest_model": "prior:price",
+      "execution_ready": false,
+      "best_in_class_proven": false,
+      "test_interpretation": "Exploratory: crypto dates were inspected in v1; not a new untouched test."
+    },
+    "SOLUSDT": {
+      "name": "Solana spot",
+      "spec": {
+        "name": "Solana spot",
+        "source": "binance",
+        "interval": "4h",
+        "horizon_bars": 6,
+        "annual_bars": 2190,
+        "half_spread_bps": 1.0,
+        "slippage_bps": 5.0,
+        "fee_bps": 10.0,
+        "intraday_only": false,
+        "execution_ready": false
+      },
+      "data": {
+        "bars": 12858,
+        "start": "2021-01-01 00:00:00+00:00",
+        "last_open": "2026-11-13 20:00:00+00:00",
+        "type": "Binance verified spot archive, 4h"
+      },
+      "status": "RESEARCH_ONLY",
+      "stale_days_at_cutoff": 0.0,
+      "blocked_windows": [],
+      "development_predictions": {
+        "samples": 717,
+        "accuracy": 0.5258019525801952,
+        "balanced_accuracy": 0.5263323786694891,
+        "auc": 0.5080783239423465,
+        "brier": 0.2531760417762751,
+        "prior_accuracy": 0.497907949790795,
+        "prior_brier": 0.25012526275572533,
+        "price_only_accuracy": 0.5118549511854951,
+        "price_only_brier": 0.25153143427526764,
+        "mean_predicted": 0.5039571059724268,
+        "observed_up_rate": 0.49232914923291493,
+        "brier_skill_vs_prior": -0.012197004760487573,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.016736401673640166,
+            0.0697350069735007
+          ],
+          "prob_mean_positive": 0.888,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.007400899303447018,
+            0.0007913755547816801
+          ],
+          "prob_mean_positive": 0.0655,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "v1_ensemble_accuracy": 0.496513249651325,
+        "v1_ensemble_brier": 0.2530386398878148,
+        "brier_improvement_vs_v1_ci": {
+          "samples": 717,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.006179572887260303,
+            0.0057184889669566275
+          ],
+          "prob_mean_positive": 0.4825,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(-0.001, 0.4]",
+            "predicted": 0.3831194486660503,
+            "actual_up": 0.6666666666666666,
+            "samples": 12
+          },
+          {
+            "bucket": "(0.4, 0.45]",
+            "predicted": 0.4294347048919164,
+            "actual_up": 0.47435897435897434,
+            "samples": 78
+          },
+          {
+            "bucket": "(0.45, 0.5]",
+            "predicted": 0.47962866122425546,
+            "actual_up": 0.46382978723404256,
+            "samples": 235
+          },
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.5154277675631219,
+            "actual_up": 0.5234657039711191,
+            "samples": 277
+          },
+          {
+            "bucket": "(0.55, 0.6]",
+            "predicted": 0.5749650569179127,
+            "actual_up": 0.5316455696202531,
+            "samples": 79
+          },
+          {
+            "bucket": "(0.6, 1.0]",
+            "predicted": 0.6204288365963327,
+            "actual_up": 0.3333333333333333,
+            "samples": 36
+          }
+        ],
+        "confident_coverage": 0.18828451882845187,
+        "confident_accuracy": 0.4148148148148148
+      },
+      "final_predictions": {
+        "samples": 312,
+        "accuracy": 0.483974358974359,
+        "balanced_accuracy": 0.5,
+        "auc": 0.5,
+        "brier": 0.25019659711946796,
+        "prior_accuracy": 0.483974358974359,
+        "prior_brier": 0.25019659711946796,
+        "price_only_accuracy": 0.483974358974359,
+        "price_only_brier": 0.25019659711946796,
+        "mean_predicted": 0.505267979844251,
+        "observed_up_rate": 0.483974358974359,
+        "brier_skill_vs_prior": 0.0,
+        "accuracy_difference_vs_prior_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            0.0,
+            0.0
+          ],
+          "prob_mean_positive": 0.0,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "brier_improvement_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            0.0,
+            0.0
+          ],
+          "prob_mean_positive": 0.0,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "v1_ensemble_accuracy": 0.5096153846153846,
+        "v1_ensemble_brier": 0.2491692848694237,
+        "brier_improvement_vs_v1_ci": {
+          "samples": 312,
+          "block_days": 14,
+          "resamples": 2000,
+          "ci95_daily_mean": [
+            -0.0037062001997656005,
+            0.0016354953978114377
+          ],
+          "prob_mean_positive": 0.227,
+          "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+        },
+        "calibration": [
+          {
+            "bucket": "(0.5, 0.55]",
+            "predicted": 0.505267979844251,
+            "actual_up": 0.483974358974359,
+            "samples": 312
+          }
+        ],
+        "confident_coverage": 0.0,
+        "confident_accuracy": null
+      },
+      "final_trading": {
+        "policy": "cash",
+        "metrics": {
+          "total_return": 0.0,
+          "cagr": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "mean_exposure": 0.0,
+          "calendar_days": 365.0,
+          "bars": 2190,
+          "round_trips": 0,
+          "entries": 0,
+          "win_rate": null,
+          "overnight_cfd_carries": 0,
+          "estimated_cost_fraction": 0.0
+        },
+        "stress_4x": {
+          "total_return": 0.0,
+          "cagr": 0.0,
+          "sharpe": 0.0,
+          "max_drawdown": 0.0,
+          "mean_exposure": 0.0,
+          "calendar_days": 365.0,
+          "bars": 2190
+        },
+        "baseline": {
+          "total_return": -0.09795270803902478,
+          "cagr": -0.09795270803902478,
+          "sharpe": -0.4762680741041659,
+          "max_drawdown": -0.2376154214136158,
+          "mean_exposure": 0.2952436224360961,
+          "calendar_days": 365.0,
+          "bars": 2190,
+          "round_trips": 1,
+          "entries": 1,
+          "win_rate": 0.0,
+          "overnight_cfd_carries": 0,
+          "estimated_cost_fraction": 0.007426201235673281
+        }
+      },
+      "latest_model": "prior:price",
+      "execution_ready": false,
+      "best_in_class_proven": false,
+      "test_interpretation": "Exploratory: crypto dates were inspected in v1; not a new untouched test."
+    }
+  },
+  "model_validation_evaluations": 440,
+  "policy_validation_evaluations": 1302,
+  "status": "RESEARCH_ONLY_NOT_BEST_IN_CLASS",
+  "broker": "not selected",
+  "live_orders_supported": false,
+  "limitations": [
+    "HistData is a reference BID feed without consolidated volume or historical spread.",
+    "WTI CFD data has a 940-day gap; affected windows are blocked rather than filled from another instrument.",
+    "The separately labeled CL=F daily direction study is not USOIL CFD P&L.",
+    "CFD session/short costs are assumptions and not a verified broker contract.",
+    "Context is delayed until next UTC midnight; no revised macro series or historical news is advertised as point-in-time data.",
+    "Prediction selection uses validation Brier score; strategy selection separately requires stress returns and consistency.",
+    "Crypto dates already seen in v1 remain exploratory. No claim of a newly untouched crypto holdout.",
+    "Intervals are descriptive block bootstraps and do not establish multiple-comparison-adjusted superiority."
+  ]
+}

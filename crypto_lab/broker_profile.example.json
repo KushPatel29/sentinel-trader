@@ -1,0 +1,9 @@
+{
+  "broker": null,
+  "execution_ready": false,
+  "symbols": {
+    "XAUUSD": {"broker_symbol": null, "contract_size": null, "minimum_lot": null, "lot_step": null, "quote_timezone": null, "commission_per_lot": null, "typical_spread": null, "swap_long": null, "swap_short": null, "triple_swap_day": null},
+    "USOIL": {"broker_symbol": null, "contract_size": null, "minimum_lot": null, "lot_step": null, "quote_timezone": null, "commission_per_lot": null, "typical_spread": null, "swap_long": null, "swap_short": null, "roll_method": null, "roll_cash_adjustments": null}
+  },
+  "note": "Metadata template only. No account keys, passwords or order permissions are required for research. No guessed value authorizes execution."
+}
