@@ -1,4 +1,5 @@
 # Streamlit Cloud installs this file. The bot itself installs via `pip install -e .`
+-r crypto_lab/requirements-tested.txt
 streamlit>=1.45
 plotly>=5.20
 yfinance>=0.2.54

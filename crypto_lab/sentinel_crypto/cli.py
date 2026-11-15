@@ -8,7 +8,7 @@ from .config import ROOT, load_protocol
 def main():
     parser = argparse.ArgumentParser(description="Sentinel crypto research and forward paper simulation")
     parser.add_argument("command", choices=["fetch", "research", "prepare-paper", "paper", "status", "stop",
-                                           "focus-fetch", "focus-research", "focus-prepare", "focus-watch", "focus-status", "focus-stop", "import-broker"])
+                                           "focus-fetch", "focus-research", "focus-prepare", "focus-watch", "focus-status", "focus-stop", "import-broker", "accuracy-research"])
     parser.add_argument("--once", action="store_true", help="Run one paper observation cycle")
     parser.add_argument("--file", help="Broker CSV file with explicit bid/ask columns and UTC offsets")
     parser.add_argument("--symbol", help="XAUUSD or USOIL/WTIUSD for a broker import")
@@ -39,6 +39,9 @@ def main():
     elif args.command == "focus-research":
         from .focus_research import evaluate_focus
         evaluate_focus()
+    elif args.command == "accuracy-research":
+        from .accuracy import evaluate_accuracy
+        evaluate_accuracy()
     elif args.command == "focus-prepare":
         from .focus_watch import prepare
         print(json.dumps(prepare(), indent=2))

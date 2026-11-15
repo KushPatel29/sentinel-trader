@@ -1,0 +1,47 @@
+{
+  "version": "accuracy-2026-11-16-v3",
+  "protocol_sha256": "2c8d21dadbb89e728d3455a33351eb53d6e347394336efc56771ce7a93333f3b",
+  "assets": {
+    "XAUUSD": {
+      "file": "XAUUSD.joblib",
+      "sha256": "26bca15c46e678d174f5ec130e758cdb6e8f058748b889f6858a4c28a6b8e9f3",
+      "profile": "guarded",
+      "fit_before": "2026-11-14 00:00:00+00:00",
+      "source_last_close": "2026-11-06 22:00:00+00:00",
+      "execution_ready": false,
+      "retrospective_accuracy": 0.5188118811881188,
+      "prior_accuracy": 0.49306930693069306
+    },
+    "BTCUSDT": {
+      "file": "BTCUSDT.joblib",
+      "sha256": "32c9316ed73c0d3bf450678536db455d10dcb4080590e08d4d0e7afa4d01d4bf",
+      "profile": "static_prior",
+      "fit_before": "2026-11-14 00:00:00+00:00",
+      "source_last_close": "2026-11-14 00:00:00+00:00",
+      "execution_ready": false,
+      "retrospective_accuracy": 0.49038461538461536,
+      "prior_accuracy": 0.49038461538461536
+    },
+    "ETHUSDT": {
+      "file": "ETHUSDT.joblib",
+      "sha256": "2baecef239cd681fb2771059de4b1471931bc4d7746fa773b2c4143b17c428de",
+      "profile": "static_prior",
+      "fit_before": "2026-11-14 00:00:00+00:00",
+      "source_last_close": "2026-11-14 00:00:00+00:00",
+      "execution_ready": false,
+      "retrospective_accuracy": 0.4967948717948718,
+      "prior_accuracy": 0.4967948717948718
+    },
+    "SOLUSDT": {
+      "file": "SOLUSDT.joblib",
+      "sha256": "b1704fbc78c53846c2e518079d99126e10dd014d971e59e172b283462cd63b06",
+      "profile": "ensemble",
+      "fit_before": "2026-11-14 00:00:00+00:00",
+      "source_last_close": "2026-11-14 00:00:00+00:00",
+      "execution_ready": false,
+      "retrospective_accuracy": 0.4807692307692308,
+      "prior_accuracy": 0.483974358974359
+    }
+  },
+  "orders_enabled": false
+}

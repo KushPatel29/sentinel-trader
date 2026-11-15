@@ -1,0 +1,21 @@
+{
+  "version": "accuracy-2026-11-16-v3",
+  "development_start": "2023-08-01T00:00:00Z",
+  "development_end": "2025-11-14T00:00:00Z",
+  "retrospective_end": "2026-11-14T00:00:00Z",
+  "retrain_days": 30,
+  "train_days": 730,
+  "calibration_days": 90,
+  "adaptive_prior_days": 90,
+  "prior_pseudocount": 20,
+  "expert_history_days": 180,
+  "expert_min_observed_days": 45,
+  "expert_min_brier_gain": 0.001,
+  "models": ["logistic_strong", "hist_small", "extra_trees"],
+  "candidates": ["static_prior", "adaptive_prior", "ensemble", "blend_25", "blend_50", "guarded"],
+  "classification_threshold": 0.5,
+  "confidence_margin": 0.03,
+  "assets": ["XAUUSD", "BTCUSDT", "ETHUSDT", "SOLUSDT"],
+  "seed": 29,
+  "interpretation": "Retrospective research on previously inspected history. Not a newly untouched test. No trading or best-in-class qualification is implied."
+}
