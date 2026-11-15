@@ -8,7 +8,8 @@ from .config import ROOT, load_protocol
 def main():
     parser = argparse.ArgumentParser(description="Sentinel crypto research and forward paper simulation")
     parser.add_argument("command", choices=["fetch", "research", "prepare-paper", "paper", "status", "stop",
-                                           "focus-fetch", "focus-research", "focus-prepare", "focus-watch", "focus-status", "focus-stop", "import-broker", "accuracy-research"])
+                                           "focus-fetch", "focus-research", "focus-prepare", "focus-watch", "focus-status", "focus-stop", "import-broker", "accuracy-research",
+                                           "challenger-research", "challenger-prepare", "challenger-watch", "challenger-status", "challenger-stop"])
     parser.add_argument("--once", action="store_true", help="Run one paper observation cycle")
     parser.add_argument("--file", help="Broker CSV file with explicit bid/ask columns and UTC offsets")
     parser.add_argument("--symbol", help="XAUUSD or USOIL/WTIUSD for a broker import")
@@ -42,6 +43,22 @@ def main():
     elif args.command == "accuracy-research":
         from .accuracy import evaluate_accuracy
         evaluate_accuracy()
+    elif args.command == "challenger-research":
+        from .challenger_research import evaluate
+        evaluate()
+    elif args.command == "challenger-prepare":
+        from .challenger_research import prepare_forward
+        print(json.dumps(prepare_forward(),indent=2))
+    elif args.command == "challenger-watch":
+        from .challenger_watch import run
+        run(once=args.once)
+    elif args.command == "challenger-status":
+        path=ROOT/"runtime"/"challengers"/"status.json"
+        print(path.read_text() if path.exists() else "Challenger worker has not started")
+    elif args.command == "challenger-stop":
+        folder=ROOT/"runtime"/"challengers";folder.mkdir(parents=True,exist_ok=True)
+        (folder/"STOP").touch()
+        print("Stop requested. Simulated positions close with current public quotes; no real orders exist.")
     elif args.command == "focus-prepare":
         from .focus_watch import prepare
         print(json.dumps(prepare(), indent=2))

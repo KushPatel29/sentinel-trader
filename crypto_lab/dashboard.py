@@ -32,7 +32,11 @@ if not (report_dir / "summary.json").exists():
     st.info("No research report yet. Run `python -m sentinel_crypto.cli fetch` then `python -m sentinel_crypto.cli research` from crypto_lab.")
     st.stop()
 report = json.loads((report_dir / "summary.json").read_text(encoding="utf-8"))
-focus, hold, live, accuracy, audit, sources = st.tabs(["Gold · Oil · Crypto", "Frozen crypto v1", "Forward paper", "Prediction quality v1", "Audit trail v1", "Research notes"])
+challengers, focus, hold, live, accuracy, audit, sources = st.tabs(["LSTM · TFT · RF", "Gold · Oil · Crypto", "Frozen crypto v1", "Forward paper", "Prediction quality v1", "Audit trail v1", "Research notes"])
+
+with challengers:
+    from sentinel_crypto.challenger_ui import render_challengers
+    render_challengers()
 
 with focus:
     from sentinel_crypto.focus_ui import render_focus

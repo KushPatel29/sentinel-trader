@@ -1,0 +1,148 @@
+[
+  {
+    "symbol": "XAUUSD",
+    "model": "logistic",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.04700000000593718
+  },
+  {
+    "symbol": "XAUUSD",
+    "model": "random_forest",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "elapsed_seconds": 1.0160000000032596
+  },
+  {
+    "symbol": "XAUUSD",
+    "model": "random_forest_deep",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "elapsed_seconds": 1.5
+  },
+  {
+    "symbol": "XAUUSD",
+    "model": "extra_trees",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.34399999999732245
+  },
+  {
+    "symbol": "XAUUSD",
+    "model": "lightgbm",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.125
+  },
+  {
+    "symbol": "XAUUSD",
+    "model": "lightgbm_small",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.11000000000058208
+  },
+  {
+    "symbol": "XAUUSD",
+    "model": "lstm",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.7047608867287636,
+        "stop_loss": 0.6874382819950535
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.6932251627246538,
+        "stop_loss": 0.6852576059187567
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.6895866170525551,
+        "stop_loss": 0.6877284213739405
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.6874812344710032,
+        "stop_loss": 0.6860239272689231
+      }
+    ],
+    "parameters": 4674,
+    "training_sequences_used": 3000,
+    "implementation": "torch.nn.LSTM",
+    "elapsed_seconds": 0.375
+  },
+  {
+    "symbol": "XAUUSD",
+    "model": "tft",
+    "boundary": "2025-05-14 00:00:00+00:00",
+    "train_samples": 3466,
+    "stop_samples": 296,
+    "calibration_samples": 369,
+    "train_last_label_end": "2025-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2025-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2025-05-13 20:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.7647774616877238,
+        "stop_loss": 0.696300359695694
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.6979363908370336,
+        "stop_loss": 0.6864775383637347
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.6947770019372305,
+        "stop_loss": 0.6910910554876731
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.6962800597151121,
+        "stop_loss": 0.693985819938564
+      }
+    ],
+    "parameters": 23594,
+    "training_sequences_used": 3000,
+    "implementation": "pytorch_forecasting.TemporalFusionTransformer",
+    "elapsed_seconds": 5.577999999994063
+  }
+]

@@ -1,0 +1,138 @@
+[
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "logistic",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "elapsed_seconds": 0.014999999999417923
+  },
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "random_forest",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "elapsed_seconds": 0.20399999999790452
+  },
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "random_forest_deep",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "elapsed_seconds": 0.1870000000053551
+  },
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "extra_trees",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "elapsed_seconds": 0.125
+  },
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "lightgbm",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "elapsed_seconds": 0.031000000002677552
+  },
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "lightgbm_small",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "elapsed_seconds": 0.031000000002677552
+  },
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "lstm",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.6948537677526474,
+        "stop_loss": 0.7878008001045358
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.6832925528287888,
+        "stop_loss": 0.8215385353448176
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.6703077405691147,
+        "stop_loss": 0.8348772115651848
+      }
+    ],
+    "parameters": 4674,
+    "training_sequences_used": 426,
+    "implementation": "torch.nn.LSTM",
+    "elapsed_seconds": 0.046999999991385266
+  },
+  {
+    "symbol": "WTI_REFERENCE",
+    "model": "tft",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 426,
+    "stop_samples": 27,
+    "calibration_samples": 38,
+    "train_last_label_end": "2026-01-28 00:00:00+00:00",
+    "stop_last_label_end": "2026-03-13 00:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 00:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.9004182368516922,
+        "stop_loss": 0.6989793754871024
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.7648338973522186,
+        "stop_loss": 0.7240636306521961
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.7224646210670471,
+        "stop_loss": 0.7267874931548621
+      }
+    ],
+    "parameters": 23594,
+    "training_sequences_used": 426,
+    "implementation": "pytorch_forecasting.TemporalFusionTransformer",
+    "elapsed_seconds": 0.7649999999994179
+  }
+]

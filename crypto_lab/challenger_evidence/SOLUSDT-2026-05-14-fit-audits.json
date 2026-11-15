@@ -1,0 +1,158 @@
+[
+  {
+    "symbol": "SOLUSDT",
+    "model": "logistic",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.03200000000651926
+  },
+  {
+    "symbol": "SOLUSDT",
+    "model": "random_forest",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 1.2810000000026776
+  },
+  {
+    "symbol": "SOLUSDT",
+    "model": "random_forest_deep",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 2.061999999990803
+  },
+  {
+    "symbol": "SOLUSDT",
+    "model": "extra_trees",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.375
+  },
+  {
+    "symbol": "SOLUSDT",
+    "model": "lightgbm",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.14100000000325963
+  },
+  {
+    "symbol": "SOLUSDT",
+    "model": "lightgbm_small",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.09399999999732245
+  },
+  {
+    "symbol": "SOLUSDT",
+    "model": "lstm",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.7306117614110311,
+        "stop_loss": 0.6869759698542289
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.7026358420650164,
+        "stop_loss": 0.683443111809608
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.6959764833251635,
+        "stop_loss": 0.6806618578710003
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.6947766914963722,
+        "stop_loss": 0.6802164079600054
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.6869322086373965,
+        "stop_loss": 0.678138366282854
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.6873480429251989,
+        "stop_loss": 0.6802348594279133
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.685598316291968,
+        "stop_loss": 0.6789153942664239
+      }
+    ],
+    "parameters": 4930,
+    "training_sequences_used": 3000,
+    "implementation": "torch.nn.LSTM",
+    "elapsed_seconds": 0.5620000000053551
+  },
+  {
+    "symbol": "SOLUSDT",
+    "model": "tft",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.6994152342279752,
+        "stop_loss": 0.6942918367021556
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.6956137344241142,
+        "stop_loss": 0.6987258308107712
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.692831481496493,
+        "stop_loss": 0.6954657743134426
+      }
+    ],
+    "parameters": 25158,
+    "training_sequences_used": 3000,
+    "implementation": "pytorch_forecasting.TemporalFusionTransformer",
+    "elapsed_seconds": 4.64100000000326
+  }
+]

@@ -1,0 +1,239 @@
+{
+  "selected": "prior",
+  "weights": {
+    "prior": 0.15021473293453474,
+    "logistic": 0.13976809479993763,
+    "random_forest": 0.11879158448450133,
+    "random_forest_deep": 0.10027258775347357,
+    "extra_trees": 0.12619589653930138,
+    "lightgbm": 0.05162595471229727,
+    "lightgbm_small": 0.04253030989282252,
+    "lstm": 0.13030086123414547,
+    "tft": 0.1402999776489862
+  },
+  "development": {
+    "prior": {
+      "samples": 157,
+      "accuracy": 0.4840764331210191,
+      "balanced_accuracy": 0.5,
+      "brier": 0.2502105892128501,
+      "auc": 0.5,
+      "accuracy_gain_vs_prior_pp": 0.0,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          0.0,
+          0.0
+        ],
+        "prob_mean_positive": 0.0,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.5056205551732047,
+      "median_probability": 0.5056205551732048,
+      "coverage": 1.0
+    },
+    "logistic": {
+      "samples": 157,
+      "accuracy": 0.5095541401273885,
+      "balanced_accuracy": 0.5112897985705003,
+      "brier": 0.25071901082992554,
+      "auc": 0.49463937621832366,
+      "accuracy_gain_vs_prior_pp": 2.547770700636942,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.09554140127388536,
+          0.15286624203821655
+        ],
+        "prob_mean_positive": 0.6255,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.5031200647354126,
+      "median_probability": 0.5024833083152771,
+      "coverage": 1.0
+    },
+    "random_forest": {
+      "samples": 157,
+      "accuracy": 0.4840764331210191,
+      "balanced_accuracy": 0.4987816764132553,
+      "brier": 0.2514989326877803,
+      "auc": 0.4322612085769981,
+      "accuracy_gain_vs_prior_pp": 0.0,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.03184713375796178,
+          0.03184713375796178
+        ],
+        "prob_mean_positive": 0.402,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.5082056728496395,
+      "median_probability": 0.505344931115896,
+      "coverage": 1.0
+    },
+    "random_forest_deep": {
+      "samples": 157,
+      "accuracy": 0.4840764331210191,
+      "balanced_accuracy": 0.47969460688758936,
+      "brier": 0.2522672397979135,
+      "auc": 0.44460688758934375,
+      "accuracy_gain_vs_prior_pp": 0.0,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.12117834394904457,
+          0.12101910828025478
+        ],
+        "prob_mean_positive": 0.48,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.49896591264339746,
+      "median_probability": 0.49372862212623686,
+      "coverage": 1.0
+    },
+    "extra_trees": {
+      "samples": 157,
+      "accuracy": 0.5095541401273885,
+      "balanced_accuracy": 0.504792072774529,
+      "brier": 0.2511017747557768,
+      "auc": 0.4866796621182586,
+      "accuracy_gain_vs_prior_pp": 2.547770700636942,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.10828025477707007,
+          0.1464968152866242
+        ],
+        "prob_mean_positive": 0.643,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.49939970921267596,
+      "median_probability": 0.4949788211439903,
+      "coverage": 1.0
+    },
+    "lightgbm": {
+      "samples": 157,
+      "accuracy": 0.5031847133757962,
+      "balanced_accuracy": 0.4969948018193632,
+      "brier": 0.25563499469266227,
+      "auc": 0.4546783625730994,
+      "accuracy_gain_vs_prior_pp": 1.9108280254777066,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.12101910828025478,
+          0.15286624203821655
+        ],
+        "prob_mean_positive": 0.5935,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.4818940489158569,
+      "median_probability": 0.4789208831015314,
+      "coverage": 1.0
+    },
+    "lightgbm_small": {
+      "samples": 157,
+      "accuracy": 0.5095541401273885,
+      "balanced_accuracy": 0.503167641325536,
+      "brier": 0.25541864588592345,
+      "auc": 0.42738791423001954,
+      "accuracy_gain_vs_prior_pp": 2.547770700636942,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.10828025477707007,
+          0.15286624203821655
+        ],
+        "prob_mean_positive": 0.6355,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.48568022014057843,
+      "median_probability": 0.48039732897167253,
+      "coverage": 1.0
+    },
+    "lstm": {
+      "samples": 157,
+      "accuracy": 0.4840764331210191,
+      "balanced_accuracy": 0.4878167641325536,
+      "brier": 0.2511690766775386,
+      "auc": 0.47124756335282647,
+      "accuracy_gain_vs_prior_pp": 0.0,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.09554140127388536,
+          0.08917197452229299
+        ],
+        "prob_mean_positive": 0.456,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.5058588435693454,
+      "median_probability": 0.5043598466297874,
+      "coverage": 1.0
+    },
+    "tft": {
+      "samples": 157,
+      "accuracy": 0.4840764331210191,
+      "balanced_accuracy": 0.5,
+      "brier": 0.25090339107222104,
+      "auc": 0.4790448343079922,
+      "accuracy_gain_vs_prior_pp": 0.0,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          0.0,
+          0.0
+        ],
+        "prob_mean_positive": 0.0,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.5178690801710992,
+      "median_probability": 0.5179285836478104,
+      "coverage": 1.0
+    },
+    "hybrid": {
+      "samples": 157,
+      "accuracy": 0.49044585987261147,
+      "balanced_accuracy": 0.4964262508122157,
+      "brier": 0.25093915753132595,
+      "auc": 0.46215074723846655,
+      "accuracy_gain_vs_prior_pp": 0.6369426751592355,
+      "accuracy_gain_vs_prior_ci": {
+        "samples": 157,
+        "block_days": 14,
+        "resamples": 2000,
+        "ci95_daily_mean": [
+          -0.10828025477707007,
+          0.12738853503184713
+        ],
+        "prob_mean_positive": 0.48,
+        "interpretation": "Descriptive uncertainty; no correction for strategy selection or future regime changes."
+      },
+      "mean_probability": 0.5042569243283185,
+      "median_probability": 0.5030200840170971,
+      "coverage": 1.0
+    }
+  },
+  "hybrid_development_scores_are_fitted": true,
+  "selection_end": "2025-11-14 00:00:00+00:00",
+  "protocol_sha256": "d430481c4948d8a60a6bb6d53838378a9dde145e7b7d717d6020a46db7d4d39c"
+}
