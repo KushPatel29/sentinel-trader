@@ -159,8 +159,29 @@ def fetch_snapshot(ticker: str) -> Snapshot:
     return snap
 
 
+ALIASES = {
+    "gold": ("GC=F", "Gold futures"), "silver": ("SI=F", "Silver futures"), "oil": ("CL=F", "Crude oil (WTI) futures"),
+    "crude": ("CL=F", "Crude oil (WTI) futures"), "brent": ("BZ=F", "Brent crude futures"),
+    "natural gas": ("NG=F", "Natural gas futures"), "gas": ("NG=F", "Natural gas futures"),
+    "copper": ("HG=F", "Copper futures"), "platinum": ("PL=F", "Platinum futures"), "corn": ("ZC=F", "Corn futures"),
+    "wheat": ("ZW=F", "Wheat futures"), "soybean": ("ZS=F", "Soybean futures"), "coffee": ("KC=F", "Coffee futures"),
+    "bitcoin": ("BTC-USD", "Bitcoin USD"), "btc": ("BTC-USD", "Bitcoin USD"), "ethereum": ("ETH-USD", "Ethereum USD"),
+    "eth": ("ETH-USD", "Ethereum USD"), "solana": ("SOL-USD", "Solana USD"), "xrp": ("XRP-USD", "XRP USD"),
+    "dogecoin": ("DOGE-USD", "Dogecoin USD"), "nifty": ("^NSEI", "NIFTY 50"), "sensex": ("^BSESN", "S&P BSE SENSEX"),
+    "s&p 500": ("^GSPC", "S&P 500 index"), "nasdaq": ("^IXIC", "Nasdaq Composite"),
+}
+
+
 def search(query: str, limit: int = 8) -> list[dict]:
-    """Name/ticker search across stocks, ETFs, crypto, futures."""
+    """Name/ticker search across stocks, ETFs, crypto, futures. Common commodity/crypto words map
+    straight to their futures/crypto tickers first (Yahoo's search would return e.g. a stock named 'Gold')."""
+    hit = ALIASES.get(query.strip().lower())
+    alias = [{"symbol": hit[0], "name": hit[1], "type": "", "exchange": ""}] if hit else []
+    rest = _search(query, limit)
+    return alias + [r for r in rest if not alias or r["symbol"] != alias[0]["symbol"]]
+
+
+def _search(query: str, limit: int) -> list[dict]:
     if os.environ.get("SENTINEL_OFFLINE_DAILY"):
         raw = _offline(os.environ["SENTINEL_OFFLINE_DAILY"])
         return [{"symbol": k, "name": k, "type": "", "exchange": "offline"} for k in raw if query.upper() in k][:limit]
