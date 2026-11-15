@@ -1,0 +1,78 @@
+# Sentinel Trader configuration.
+# Secrets (API keys) come from environment variables / .env, never from this file.
+
+mode: paper            # paper | live   (live also needs --confirm-live and SENTINEL_LIVE_CONFIRM=yes)
+symbols: [AAPL, MSFT, NVDA, AMZN, META, SPY]
+timeframe_minutes: 15  # must divide 30 evenly: 1, 5, 10, 15 or 30
+
+data:
+  feed: iex            # iex (free) | sip (paid). Train and trade on the SAME feed.
+  history_days: 730
+  db_path: data/sentinel.db
+
+labels:                # triple-barrier labels that mirror the bracket orders the bot places
+  horizon_bars: 8      # max holding period in bars (never crosses the session close)
+  tp_atr: 2.0          # take-profit distance in ATRs
+  sl_atr: 1.0          # stop-loss distance in ATRs
+
+model:
+  path: models/model_bundle.pkl
+  min_train_bars: 3000     # timestamps in the first walk-forward training window
+  test_bars: 750           # timestamps per walk-forward test fold
+  embargo_bars: 8          # gap between train and test (>= horizon) to stop label leakage
+  entry_threshold: 0.42    # min P(take-profit hit before stop); break-even at 2:1 is ~0.34 before costs
+  min_edge: 0.05           # min expected R per trade: p*b - (1-p)
+  lgbm:
+    n_estimators: 400
+    learning_rate: 0.03
+    num_leaves: 15
+    min_child_samples: 100
+    subsample: 0.8
+    subsample_freq: 1
+    colsample_bytree: 0.8
+    reg_lambda: 1.0
+    verbose: -1
+
+regime:
+  n_states: 3
+  block_high_vol: true     # no new entries while the highest-volatility regime is active
+
+sentiment:
+  engine: auto             # auto (FinBERT if installed, else lexicon) | finbert | lexicon
+  decay_minutes: 240       # half-life-ish decay of a headline's influence
+  veto_threshold: -0.5     # decayed score at or below this vetoes longs and exits open positions
+  boost_threshold: 0.5     # decayed score at or above this scales size up
+  boost_multiplier: 1.25
+  llm:
+    enabled: false         # escalate ambiguous, high-impact headlines to Claude (needs ANTHROPIC_API_KEY)
+    model: claude-haiku-5-5
+    ambiguity_band: 0.3    # only escalate when |base score| < this
+    max_calls_per_hour: 30
+    timeout_s: 8
+
+risk:
+  risk_per_trade: 0.005        # max 0.5% of equity lost if the stop is hit
+  kelly_fraction: 0.25         # quarter-Kelly cap on risk
+  max_position_pct: 0.20       # max notional per position as share of equity
+  max_gross_exposure: 1.0      # sum of position notionals / equity
+  max_open_positions: 5
+  daily_drawdown_halt: 0.02    # flatten and halt for the day at -2% from start-of-day equity
+  max_api_latency_ms: 2500     # broker calls slower than this block new entries
+  latency_strikes: 3           # consecutive slow calls before blocking
+  max_bar_delay_s: 120         # a bar arriving later than this after its close is treated as stale
+  no_entry_minutes_after_open: 15
+  no_entry_minutes_before_close: 30
+  flatten_minutes_before_close: 10
+  # The FINRA pattern-day-trader rule was eliminated (effective June 4, 2026), but brokers have until
+  # Oct 2027 to migrate. Turn this on if your account still enforces the old 3-day-trade limit.
+  pdt_guard: false
+  kill_switch_file: KILL       # create this file to flatten everything and stop
+
+execution:
+  slippage_bps: 2.0            # used by the simulator; live fills are whatever the market gives
+  commission_per_share: 0.0
+  flatten_on_shutdown: false
+
+backtest:
+  initial_capital: 100000
+  reports_dir: reports

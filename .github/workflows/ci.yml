@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests
+      - run: pytest -q
+      - name: Offline pipeline smoke test (synthetic data)
+        run: |
+          sentinel fetch --synthetic --days 260
+          sentinel train --holdout-days 10
+          sentinel backtest
+          sentinel replay --days 5

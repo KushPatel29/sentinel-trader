@@ -1,0 +1,21 @@
+services:
+  bot:
+    build: .
+    command: sentinel live
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./reports:/app/reports
+      - ./config:/app/config:ro
+    stop_grace_period: 30s
+
+  dashboard:
+    build: .
+    command: streamlit run dashboard/app.py --server.address 0.0.0.0 --server.port 8501
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data:ro
+    depends_on: [bot]

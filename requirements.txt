@@ -1,0 +1,15 @@
+# Streamlit Cloud installs this file. The bot itself installs via `pip install -e .`
+streamlit>=1.45
+plotly>=5.20
+yfinance>=0.2.54
+requests>=2.31
+pandas>=2.1
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.4
+lightgbm>=4.3
+pydantic>=2.5
+pyyaml>=6.0
+matplotlib>=3.8
+alpaca-py>=0.30
+tzdata>=2024.1
