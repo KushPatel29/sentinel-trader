@@ -18,7 +18,11 @@ st.markdown("""<style>
 st.markdown('<div class="eyebrow">SENTINEL / MARKET RESEARCH</div>',unsafe_allow_html=True)
 st.title("Gold, oil & crypto.")
 st.write("Live crypto market data, auditable model comparisons and clear commodity data readiness. All model outputs are research; this website sends no trading orders.")
-markets,accuracy,commodities,operations=st.tabs(["Live crypto","Accuracy evidence","Gold & oil readiness","Paper testing & methods"])
+markets,challengers,accuracy,commodities,operations=st.tabs(["Live crypto","LSTM · TFT · RF","Accuracy evidence","Gold & oil readiness","Paper testing & methods"])
+
+with challengers:
+    from sentinel_crypto.challenger_ui import render_challengers
+    render_challengers()
 
 
 @st.cache_data(ttl=30,show_spinner=False)

@@ -1,0 +1,153 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "model": "logistic",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.031000000002677552
+  },
+  {
+    "symbol": "BTCUSDT",
+    "model": "random_forest",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 1.3439999999973224
+  },
+  {
+    "symbol": "BTCUSDT",
+    "model": "random_forest_deep",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 2.1090000000112923
+  },
+  {
+    "symbol": "BTCUSDT",
+    "model": "extra_trees",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.375
+  },
+  {
+    "symbol": "BTCUSDT",
+    "model": "lightgbm",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.1409999999887077
+  },
+  {
+    "symbol": "BTCUSDT",
+    "model": "lightgbm_small",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "elapsed_seconds": 0.09300000000803266
+  },
+  {
+    "symbol": "BTCUSDT",
+    "model": "lstm",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.7320765952269236,
+        "stop_loss": 0.7274205171459233
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.7010048180818558,
+        "stop_loss": 0.699817639615204
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.6943891197443008,
+        "stop_loss": 0.7046113673919288
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.691451278825601,
+        "stop_loss": 0.7040337782040201
+      }
+    ],
+    "parameters": 4930,
+    "training_sequences_used": 3000,
+    "implementation": "torch.nn.LSTM",
+    "elapsed_seconds": 0.34399999999732245
+  },
+  {
+    "symbol": "BTCUSDT",
+    "model": "tft",
+    "boundary": "2026-05-14 00:00:00+00:00",
+    "train_samples": 3743,
+    "stop_samples": 263,
+    "calibration_samples": 353,
+    "train_last_label_end": "2026-01-28 20:00:00+00:00",
+    "stop_last_label_end": "2026-03-14 20:00:00+00:00",
+    "calibration_last_label_end": "2026-05-13 20:00:00+00:00",
+    "epochs": [
+      {
+        "epoch": 1,
+        "train_loss": 0.702779603501161,
+        "stop_loss": 0.6989945204672338
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.6944978063305219,
+        "stop_loss": 0.6977632168869512
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.694009947280089,
+        "stop_loss": 0.6950504547108328
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.693878173828125,
+        "stop_loss": 0.7026949813388123
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.6929298142592112,
+        "stop_loss": 0.6989941282354136
+      }
+    ],
+    "parameters": 25158,
+    "training_sequences_used": 3000,
+    "implementation": "pytorch_forecasting.TemporalFusionTransformer",
+    "elapsed_seconds": 7.73399999999674
+  }
+]

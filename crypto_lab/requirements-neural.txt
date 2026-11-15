@@ -1,0 +1,14 @@
+# Separate CPU research environment; do not add these to the hosted UI runtime.
+# Install torch first with --index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0
+pytorch-forecasting==1.8.0
+lightning==2.6.6
+lightgbm==4.7.0
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.0
+scipy==1.18.1
+joblib==1.6.0
+requests==2.32.3
+threadpoolctl==3.8.0
+pytest==9.1.1

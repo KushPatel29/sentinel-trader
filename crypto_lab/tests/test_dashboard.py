@@ -10,7 +10,7 @@ def test_dashboard_renders_evidence_without_execution():
         pytest.skip("Evidence not available")
     app = AppTest.from_file(str(root / "dashboard.py"), default_timeout=30).run()
     assert not app.exception
-    assert len(app.tabs) == 6
+    assert {"LSTM · TFT · RF","Gold · Oil · Crypto","Frozen crypto v1","Forward paper","Prediction quality v1","Audit trail v1","Research notes"} <= {tab.label for tab in app.tabs}
     assert any(m.label == "Selected strategy net" and m.value == "+0.00%" for m in app.metric)
     next(s for s in app.selectbox if s.label == "Evidence table").set_value("all-validation-trials").run()
     assert not app.exception

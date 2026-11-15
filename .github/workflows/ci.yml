@@ -5,6 +5,18 @@ on:
   pull_request:
 
 jobs:
+  neural-models:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -r crypto_lab/requirements-neural.txt
+      - run: python -m pytest -q crypto_lab/tests/test_challengers.py
+        env:
+          PYTHONPATH: crypto_lab
   public-release:
     runs-on: ubuntu-latest
     steps:

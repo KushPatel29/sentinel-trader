@@ -1,0 +1,61 @@
+{
+  "protocol": {
+    "version": "challengers-2026-11-16-v4",
+    "assets": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "XAUUSD",
+      "WTI_REFERENCE",
+      "WTIUSD"
+    ],
+    "models": [
+      "logistic",
+      "random_forest",
+      "random_forest_deep",
+      "extra_trees",
+      "lightgbm",
+      "lightgbm_small",
+      "lstm",
+      "tft"
+    ],
+    "development_start": "2025-05-14T00:00:00Z",
+    "final_start": "2025-11-14T00:00:00Z",
+    "refit_boundary": "2026-05-14T00:00:00Z",
+    "end": "2026-11-14T00:00:00Z",
+    "train_days": 730,
+    "calibration_days": 60,
+    "early_stop_days": 45,
+    "seed": 29,
+    "lookback": 24,
+    "hidden_size": 16,
+    "max_epochs": 8,
+    "patience": 2,
+    "max_training_sequences": 3000,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "torch_threads": 4,
+    "hybrid_ridge": 0.02,
+    "hybrid_prior_weight": 0.25,
+    "entry_threshold": 0.57,
+    "paper_initial_balance": 10000,
+    "paper_exposure": 0.1,
+    "paper_fee_bps": 10,
+    "paper_slippage_bps": 5,
+    "maximum_close_delay_seconds": 300,
+    "maximum_label_delay_seconds": 300,
+    "maximum_model_age_days": 30,
+    "orders_enabled": false,
+    "interpretation": "All historic dates were previously inspected. Research only; no fresh holdout, no best-in-class or profitability claim. New bar-close observations are recorded separately without backfill. LSTM means standard LSTM, as clarified by the user."
+  },
+  "sha256": "d430481c4948d8a60a6bb6d53838378a9dde145e7b7d717d6020a46db7d4d39c",
+  "source_sha256": {
+    "BTCUSDT": "7a3d27fe5a8628775bb4c2afd8f79d35e5504679697d0de0fa690dcec1038e4a",
+    "ETHUSDT": "951955bdcb964a1e43b9e5e77b12814ca31cb1194d42dd378c2ad5a6dca2bacb",
+    "SOLUSDT": "1604ae212bd0eadebc3aad743699535f3d924d2c258eefb252ae2a726871b663",
+    "XAUUSD": "b97ffd589ffdf09768b8f52f8ee1fb99cd92b4c484f40ba8c9dc63757bf35e72",
+    "WTI_REFERENCE": "0dfbca314d8c54405e9a4e590d45ca4c0934ac4606dad9881044527ac5406e17",
+    "WTIUSD": "dc39f6be7dca6a7c55bece41703ca940a74ffbeb115b46cafe448007164d60de"
+  },
+  "locked_utc": "2026-11-15T20:11:06.734005+00:00"
+}

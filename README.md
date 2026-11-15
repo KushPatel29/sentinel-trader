@@ -1,5 +1,11 @@
 # Sentinel Trader
 
+## LSTM, TFT, Random Forest and real-data paper challengers
+
+The **LSTM · TFT · RF** tab adds 120 completed chronological fits across five usable instruments, with standard LSTM, actual PyTorch Forecasting TFT, Random Forest, LightGBM, Extra Trees, logistic regression, a prior and a regularized hybrid. Full candidate results and source/fit audits are retained. The new models did not establish broad superiority: the matched-date selected SOL baseline improved from 48.23% to 50.80%, BTC/ETH accuracy was unchanged, and the selected gold challenger was slightly worse. The deployed v3 inference models are preserved.
+
+Separate local paper books now collect real BTC/ETH/SOL quotes and new forecasts, including observed spreads and assumed fees/slippage. Startup diagnostics are kept apart from the primary candle-close experiment. No new 24-hour outcome is claimed before it matures. See [methods, results and worker operations](crypto_lab/docs/CHALLENGERS.md). No real-money orders or exchange keys are used.
+
 ## Public research release v3
 
 Open [Sentinel live](https://sentinel-trader-kp.streamlit.app/) for public BTC, ETH and SOL quotes, research probabilities, the complete accuracy comparison and commodity-data readiness. The website submits no trading orders. The original asset analyzer remains available in the sidebar.
