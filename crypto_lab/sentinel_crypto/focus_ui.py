@@ -12,6 +12,7 @@ from .focus_data import load_focus
 
 
 def render_focus():
+    st.caption("Archived focus protocol v2. The v3 monthly-refit accuracy comparison is on Live markets → Accuracy evidence; these earlier results remain unchanged.")
     cfg = load_focus()
     folder = ROOT / "reports" / cfg["version"]
     if not (folder / "summary.json").exists():
