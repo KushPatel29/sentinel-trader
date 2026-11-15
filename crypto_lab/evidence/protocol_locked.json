@@ -1,0 +1,32 @@
+{
+  "protocol": {
+    "version": "crypto-2026-11-15-v1",
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT"
+    ],
+    "interval": "4h",
+    "start": "2021-01-01",
+    "data_cutoff": "2026-11-15T04:00:00Z",
+    "holdout_days": 180,
+    "train_days": 540,
+    "validation_days": 180,
+    "test_days": 90,
+    "horizon_bars": 6,
+    "warmup_bars": 1200,
+    "fee_bps": 10,
+    "slippage_bps": 5,
+    "stress_multiplier": 2,
+    "target_annual_vol": 0.2,
+    "max_sleeve_exposure": 0.6,
+    "daily_loss_limit": 0.02,
+    "drawdown_limit": 0.15,
+    "min_validation_trades": 4,
+    "seed": 29,
+    "initial_cash": 10000,
+    "poll_seconds": 60
+  },
+  "sha256": "aa241d467d83941c1e202b79b79a677652d55ec921584d50f9f95e667f6d7cdd",
+  "locked_utc": "2026-11-15T07:55:13.474040+00:00"
+}

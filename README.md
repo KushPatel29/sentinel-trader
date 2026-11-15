@@ -1,5 +1,13 @@
 # Sentinel Trader
 
+## Crypto research and continuous local paper simulation
+
+The new [Crypto Lab](crypto_lab/README.md) tests BTC, ETH and SOL on 38,595 real four-hour candles. It includes 20 predeclared candidates, chronological model calibration, purged walk-forward validation, a frozen six-month test, fee/slippage stress tests, all 780 validation attempts, and a restartable local forward paper worker. Open **Crypto Research** in the Streamlit sidebar, or run its dedicated local monitor at port 8502.
+
+**Current evidence: no profitable edge established.** The frozen test selected cash: 0.00% net, versus −15.70% for full-exposure buy & hold and −5.17% for the volatility-matched baseline. The separate forward experiment tracks actual future observations; its results must not be presented as historical earnings. This crypto package accepts no exchange keys and has no real-money order client.
+
+See the [primary-source research review](crypto_lab/docs/RESEARCH.md), [sealed evidence](crypto_lab/evidence/summary.json), and [local start/stop instructions](crypto_lab/README.md). The existing US-equity code below is preserved; its historical performance claims are separate from this crypto experiment.
+
 An intraday trading bot for US equities on [Alpaca](https://alpaca.markets). It combines a LightGBM probability model, chart-pattern features, a market-regime filter and real-time news sentiment, with an independent risk officer that can veto any trade or shut the bot down.
 
 It runs in **paper trading by default**. Real money takes three separate switches (see [Safety](#safety)).
