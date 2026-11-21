@@ -195,7 +195,12 @@
    ]
   },
   {
-   "title": "5. What this means for trading gold",
+   "title": "5. Time-of-day and day-of-week signals (21 Nov 2026)",
+   "text": "Average return of gold futures by hour of day, measured on hourly bars from Jul 2024 to Sep 2025 and tested on Sep 2025 to Nov 2026. The hourly pattern **did not repeat**: the correlation between the two halves was 0.05. Going long in the 4 best hours from the first half lost **12.7%** after a 2 bp spread over 1,003 trades. Shorting the 4 worst hours lost **9.8%**. Weekday averages flip between 2006–2018 and 2019–2026. No timed up/down signal survived.",
+   "table": []
+  },
+  {
+   "title": "6. What this means for trading gold",
    "text": "- Use the **ranges** for stop and target placement, and **volatility sizing** for position size. Both held up on unseen data.\n- Don't pay for direction calls. Ours failed the test, and most published 'accurate gold signals' are scored on the data they were built from.\n- For holds longer than a few days, CFD financing is a large, certain cost. An ETF or physical gold is cheaper.\n- Forward-test anything new in paper trading for 4–8 weeks before risking money."
   }
  ]

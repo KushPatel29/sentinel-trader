@@ -10,6 +10,7 @@ Scripts behind the Gold page's evidence. Every model and setting was chosen on *
 | `ranges3.py` | HAR / Garman–Klass volatility upgrade vs the live model (interval score) |
 | `profit.py` | Strategy tests with spread, slippage and CFD financing |
 | `breakout_check.py` | Stress test that exposed the breakout backtest artefact |
+| `timeofday.py` | Hour-of-day and weekday up/down patterns, tested out of sample |
 
 `results.json` is the summary the app shows in **What we tested**.
 
