@@ -22,7 +22,7 @@ The Gold page's **Daily plan** tab and banner apply one fixed rule:
 - **Stop-loss:** trails 2 daily volatilities below the best close.
 - **Exit:** at the stop, or at the next open after a close below either average.
 
-Track record with costs: 2008–2018 about flat; 2019–2026 +6.3%/yr; 37% winning trades; worst losing streak 8. Sized at 1% risk per trade: +3.9%/yr with a −11% worst drawdown. Tuning 80 variants on 2006–2018 made 2019–2026 *worse* (rank correlation −0.33), so the rule is deliberately untuned (`research/gold/plan_tune.py`). Signals use completed sessions only; an in-progress daily bar is shown as the live price but never feeds the plan.
+Track record with costs: 2008–2018 about flat; 2019–2026 +6.3%/yr; 37% winning trades; worst losing streak 8. Sized at 1% risk per trade: about +4–5%/yr with a −10% worst drawdown. Tuning 80 variants on 2006–2018 made 2019–2026 *worse* (rank correlation −0.33), so the rule is deliberately untuned (`research/gold/plan_tune.py`). Signals use completed sessions only; an in-progress daily bar is shown as the live price but never feeds the plan.
 
 **Automate it on Alpaca paper (GLD):** `sentinel gold-plan --dry-run` shows what it would do. Each run:
 - queues a risk-sized market buy for the next open, with an attached stop;
