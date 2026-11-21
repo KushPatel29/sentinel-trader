@@ -1,5 +1,16 @@
 # Sentinel Trader
 
+## Gold-only release (current)
+
+[Sentinel live](https://sentinel-trader-kp.streamlit.app/) now covers **gold only**. The home page (`gold_app.py`) shows:
+
+- **Price ranges** for the next day, week and month at 50/80/90% confidence, plus how high or low tomorrow's price is likely to reach. These are the forecasts that held up on unseen data: on 2019–2026, the 80% range contained **78–80%** of outcomes and the 90% range **86–89%**, measured on non-overlapping periods. The volatility model (EWMA λ = 0.94 blended with gold's implied volatility, GVZ) and every setting were chosen on 2009–2018 only.
+- **Direction tests, reported honestly:** walk-forward logistic regression, gradient boosting, and trend and momentum rules at 1/5/21/63 days. On 2019–2026 **none beat simply guessing "up"** (gold rose in 57–71% of periods). The page labels the direction signal "no reliable edge" and recomputes this verdict every time it loads.
+- **What's moving gold:** the dollar, yields, real yields (TIP), VIX, silver, miners, oil and copper. **Psychology & demand:** fear & greed, RSI, GVZ, GLD ETF volume, streaks and drawdown. **Strategies:** buy & hold beat every rule on return; volatility-sized holding had the best Sharpe (0.91 vs 0.79) and the smaller drawdown (−26% vs −34%). **Seasonality.**
+- A **trade planner** that sizes a position from the user's own stop, with stops placed using the calibrated high/low levels. Every level rescales to the user's broker XAU/USD quote.
+
+The paper bot (`config/config.yaml`) now trades **GLD** only. The **Gold bot lab** page runs its 15-minute walk-forward backtest and forward simulation on GLD. Crypto, oil and the multi-asset analyzer are preserved in the repo but removed from the public navigation.
+
 ## LSTM, TFT, Random Forest and real-data paper challengers
 
 The **LSTM · TFT · RF** tab adds 120 completed chronological fits across five usable instruments, with standard LSTM, actual PyTorch Forecasting TFT, Random Forest, LightGBM, Extra Trees, logistic regression, a prior and a regularized hybrid. Full candidate results and source/fit audits are retained. The new models did not establish broad superiority: the matched-date selected SOL baseline improved from 48.23% to 50.80%, BTC/ETH accuracy was unchanged, and the selected gold challenger was slightly worse. The deployed v3 inference models are preserved.

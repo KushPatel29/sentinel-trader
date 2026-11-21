@@ -1,10 +1,9 @@
-"""Public release entrypoint; focused market research is the default page."""
+"""Sentinel: gold-only release. Gold signals are the home page."""
 import streamlit as st
 
-page=st.navigation([
-    st.Page("crypto_lab/release_home.py",title="Live markets",icon="📡",default=True),
-    st.Page("crypto_lab/focus_dashboard.py",title="Gold & oil research",icon="🧪",url_path="commodity-research"),
-    st.Page("crypto_lab/dashboard.py",title="Archived evidence & paper",icon="📊",url_path="evidence"),
-    st.Page("legacy_analyzer_app.py",title="Stock & asset analyzer",icon="🔎",url_path="asset-analyzer")
+st.set_page_config(page_title="Sentinel · Gold signals", page_icon="🪙", layout="wide")
+page = st.navigation([
+    st.Page("gold_app.py", title="Gold signals", icon="🪙", default=True),
+    st.Page("gold_bot.py", title="Gold bot lab (GLD)", icon="🤖", url_path="gold-bot"),
 ])
 page.run()

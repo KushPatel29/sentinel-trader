@@ -84,12 +84,12 @@ def test_public_artifacts_are_bundled_and_all_remain_research_only():
         assert model["spec"]["source"]=="binance"
 
 
-def test_public_entrypoint_renders_without_live_network(monkeypatch):
+def test_public_entrypoint_is_gold_and_degrades_without_network(monkeypatch):
     pytest.importorskip("streamlit")
     from streamlit.testing.v1 import AppTest
     monkeypatch.setenv("SENTINEL_DISABLE_LIVE","1")
+    monkeypatch.delenv("SENTINEL_OFFLINE_GOLD",raising=False)
     root=Path(__file__).resolve().parents[2]
-    app=AppTest.from_file(str(root/"streamlit_app.py"),default_timeout=30).run()
+    app=AppTest.from_file(str(root/"streamlit_app.py"),default_timeout=60).run()
     assert not app.exception
-    assert any(t.label=="Live crypto" for t in app.tabs)
-    assert any("Live source unavailable" in w.value for w in app.warning)
+    assert any("Could not load gold data" in e.value for e in app.error)

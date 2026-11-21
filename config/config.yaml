@@ -2,7 +2,7 @@
 # Secrets (API keys) come from environment variables / .env, never from this file.
 
 mode: paper            # paper | live   (live also needs --confirm-live and SENTINEL_LIVE_CONFIRM=yes)
-symbols: [AAPL, MSFT, NVDA, AMZN, META, SPY]
+symbols: [GLD]          # gold only: GLD tracks spot gold and trades on Alpaca
 timeframe_minutes: 15  # must divide 30 evenly: 1, 5, 10, 15 or 30
 
 data:

@@ -1,0 +1,65 @@
+"""Gold module on synthetic data (no network)."""
+import numpy as np
+import pandas as pd
+import pytest
+
+from sentinel.gold import model as M
+from sentinel.gold.data import CONTEXT
+
+
+def _universe(n=4200, seed=3):
+    rng = np.random.default_rng(seed)
+    idx = pd.bdate_range("2008-01-01", periods=n)
+    vol = 0.01 * np.exp(np.cumsum(rng.normal(0, 0.03, n)) * 0.2)          # clustered volatility
+    r = rng.standard_t(5, n) * vol / np.sqrt(5 / 3)
+    c = 1000 * np.exp(np.cumsum(r))
+    hi = c * np.exp(np.abs(rng.normal(0, 1, n)) * vol * 0.6)
+    lo = c * np.exp(-np.abs(rng.normal(0, 1, n)) * vol * 0.6)
+    gold = pd.DataFrame({"open": c, "high": np.maximum(hi, c), "low": np.minimum(lo, c), "close": c,
+                         "volume": 1e5}, index=idx)
+    ctx = pd.DataFrame({k: 100 * np.exp(np.cumsum(rng.normal(0, 0.01, n))) for k in CONTEXT}, index=idx)
+    ctx["gvz"] = 15 + 5 * rng.random(n)
+    ctx["gld_volume"] = rng.lognormal(15, 0.3, n)
+    return gold, ctx
+
+
+@pytest.fixture(scope="module")
+def uni():
+    return _universe()
+
+
+def test_ranges_are_calibrated_and_ordered(uni):
+    gold, ctx = uni
+    R = M.ranges(gold, ctx)
+    last = gold["close"].iloc[-1]
+    for _, row in R.bands.iterrows():
+        assert row.low < last < row.high
+        assert abs(row.measured_coverage - row.level) < 0.08      # causal rolling quantiles stay near nominal
+    w = R.bands.assign(w=R.bands.high - R.bands.low).set_index(["days", "level"])["w"]
+    assert w[(1, 0.5)] < w[(1, 0.8)] < w[(1, 0.9)] < w[(21, 0.9)]
+    hl = R.highlow.set_index(["side", "confidence"])["level"]
+    assert hl[("high", 0.9)] > hl[("high", 0.5)] > last > hl[("low", 0.5)] > hl[("low", 0.9)]
+
+
+def test_direction_on_random_walk_finds_no_edge(uni):
+    gold, ctx = uni
+    d = M.direction(gold, ctx)
+    assert set(d["days"]) == {5, 21}
+    assert d["prob_up"].between(0, 1).all()
+    assert not d["reliable"].any()
+
+
+def test_strategies_and_helpers(uni):
+    gold, ctx = uni
+    S, curves = M.strategies(gold, start="2015-01-01")
+    assert "Buy & hold" in set(S["strategy"]) and len(curves.columns) == len(S)
+    assert len(M.seasonality(gold)) == 12
+    assert {"driver", "pushing gold"} <= set(M.drivers(gold, ctx).columns)
+    s = M.sentiment(gold, ctx)
+    assert 0 <= s["greed_index"] <= 100
+
+
+def test_position_size():
+    p = M.position_size(10_000, 0.01, entry=2000, stop=1980, oz_per_lot=100)
+    assert p["ounces"] == pytest.approx(5.0) and p["lots"] == pytest.approx(0.05)
+    assert M.position_size(10_000, 0.01, 2000, 2000)["ounces"] == 0
