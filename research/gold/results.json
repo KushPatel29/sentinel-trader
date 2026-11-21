@@ -205,7 +205,17 @@
    "table": []
   },
   {
-   "title": "7. What this means for trading gold",
+   "title": "7. Chart patterns, candlesticks and look-alike matching (21 Nov 2026)",
+   "text": "20 patterns (double top/bottom, head & shoulders and inverse, triangle breakouts, range breakouts, bull/bear flags, engulfing, hammer, shooting star, morning/evening star, three soldiers/crows, inside-bar breakouts) were detected causally and tested at 1/5/10 days on daily data and 1/4/8 hours on hourly data: **120 tests**. Only 3 looked significant in the first period, fewer than chance alone would give, and **none held up afterwards**. Example: triangle breakouts up were right 79% of the time in 2003–2018, then 53% in 2019–2026 against a 57% baseline. Hourly shooting stars went from 56% to 48%. Look-alike (nearest-neighbour) matching on the last 20 days: 2019–2026 accuracy 56.9% = always-up baseline (AUC 0.55). Hourly: 51.6% vs 50.7% (not significant).",
+   "table": []
+  },
+  {
+   "title": "8. Leverage (21 Nov 2026)",
+   "text": "The long + short trend plan on 2019–2026 (gold's worst day −11.4%, worst 3 days −13.1%): at 1× leverage $10,000 → $19,400 (worst drop −28%). At **5×** the worst drop was −94%. At **10×** the account was effectively wiped out by May 2020, at **20×** by Nov 2019, and at **50×** by Feb 2019. Leverage multiplies losses as well as gains. It doesn't improve accuracy.",
+   "table": []
+  },
+  {
+   "title": "9. What this means for trading gold",
    "text": "- Use the **ranges** for stop and target placement, and **volatility sizing** for position size. Both held up on unseen data.\n- Don't pay for direction calls. Ours failed the test, and most published 'accurate gold signals' are scored on the data they were built from.\n- For holds longer than a few days, CFD financing is a large, certain cost. An ETF or physical gold is cheaper.\n- Forward-test anything new in paper trading for 4–8 weeks before risking money."
   }
  ]

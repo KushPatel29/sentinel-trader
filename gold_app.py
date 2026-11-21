@@ -18,6 +18,7 @@ import streamlit as st  # noqa: E402
 
 from sentinel.gold import model as M  # noqa: E402
 from sentinel.gold.data import load_universe  # noqa: E402
+from sentinel.gold.patterns import PATTERN_INFO, all_patterns, analog_forecast, zigzag  # noqa: E402
 from sentinel.gold.plan import todays_plan  # noqa: E402
 
 GOLD_C, GREEN, RED, GREY, BLUE = "#f5c542", "#22c55e", "#ef4444", "#94a3b8", "#3b82f6"
@@ -46,6 +47,8 @@ def compute():
         "strategies": M.strategies(gold), "strategies_cfd": M.strategies(gold, financing_annual=0.06),
         "season": M.seasonality(gold), "loaded": pd.Timestamp.utcnow(),
         "plan": todays_plan(gold, ctx),
+        "patterns": all_patterns(gold), "pivots": zigzag(gold),
+        "analog": analog_forecast(gold["close"], horizon=5, start=gold.index[-1]),
     }
     print(f"[gold] computed in {time.time() - t0:.1f}s", flush=True)
     return out
@@ -55,6 +58,12 @@ def compute():
 def extra_drivers():
     from sentinel.gold.extra import extended_drivers
     return extended_drivers()
+
+
+@st.cache_data(ttl=24 * 3600, show_spinner=False)
+def pattern_track_record():
+    p = Path(__file__).parent / "research" / "gold" / "pattern_tests_daily.csv"
+    return pd.read_csv(p) if p.exists() else pd.DataFrame()
 
 
 @st.cache_data(ttl=24 * 3600, show_spinner=False)
@@ -171,7 +180,7 @@ st.markdown(f"""<div class="card" style="margin:14px 0;border-color:{plan_col}">
 <div class="muted">TODAY'S TRADE PLAN · rule: trend-following long with trailing stop (see 🗓️ Daily plan)</div>
 <div class="big" style="color:{plan_col}">{P.action}</div><div>{detail}</div></div>""", unsafe_allow_html=True)
 
-tabs = st.tabs(["🗓️ Daily plan", "📏 Price ranges", "🎯 Trade planner", "🧭 Direction tests", "🌍 What's moving gold",
+tabs = st.tabs(["🗓️ Daily plan", "🔍 Patterns", "📏 Price ranges", "🎯 Trade planner", "🧭 Direction tests", "🌍 What's moving gold",
                 "🧠 Psychology & demand", "📈 Strategies", "📅 Seasonality", "🔬 What we tested", "ℹ️ Method"])
 
 # ------------------------------------------------------------------ daily plan
@@ -216,8 +225,73 @@ close, so act at the next open.""")
     st.caption("Levels are on COMEX gold futures. Enter your broker's price in the sidebar to convert them. The plan updates "
                "with each new daily close.")
 
-# ------------------------------------------------------------------ ranges
+# ------------------------------------------------------------------ patterns
 with tabs[1]:
+    Pt = D["patterns"]
+    recent = Pt.iloc[-10:]
+    found = [(d, k) for d in recent.index for k in recent.columns if recent.at[d, k] > 0]
+    rec = pattern_track_record()
+
+    def record(key, h=5):
+        if rec.empty:
+            return None, None
+        r = rec[(rec["key"] == key) & (rec["h"] == h)].set_index("period")
+        return (r.loc["dev"] if "dev" in r.index else None), (r.loc["hold"] if "hold" in r.index else None)
+
+    st.markdown("Chart and candlestick patterns are detected on **completed daily bars**, dated on the day each pattern is "
+                "confirmed. That's the earliest a chartist could have acted. Each pattern implies buy (▲) or sell (▼).")
+    if not found:
+        st.info("No pattern confirmed in the last 10 sessions.")
+    else:
+        rows = []
+        for d, k in found[::-1]:
+            name, direction, desc = PATTERN_INFO[k]
+            dv, ho = record(k)
+            def fmt(r):
+                return "—" if r is None or pd.isna(r.get("hit")) else f"{r['hit']:.0%} right vs {r['base']:.0%} baseline (n={int(r['n'])})"
+            verdict = ("❌ no proven edge" if ho is None or pd.isna(ho.get("p")) or ho["p"] >= 0.05 or ho["edge"] <= 0
+                       else "✅ held up")
+            rows.append({"Confirmed": d.date(), "Pattern": name, "Signal": "▲ buy" if direction > 0 else "▼ sell",
+                         "5-day record 2003–2018": fmt(dv), "5-day record 2019–2026": fmt(ho), "Verdict": verdict,
+                         "What it is": desc})
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+    an = D["analog"]
+    if len(an):
+        a_ = an.iloc[-1]
+        st.markdown(f"**Look-alike matching:** among the 50 past moments whose last 20 days looked most like now, gold was "
+                    f"higher 5 days later **{a_.analog_up_share:.0%}** of the time (average {a_.analog_mean_return:+.2%}). "
+                    "On 2019–2026 this method was right 56.9% of the time, exactly the same as always saying 'up' "
+                    "(AUC 0.55, not significant).")
+    hist = gold.iloc[-160:]
+    fig = go.Figure(go.Candlestick(x=hist.index, open=px(hist["open"]), high=px(hist["high"]), low=px(hist["low"]),
+                                   close=px(hist["close"]), increasing_line_color=GREEN, decreasing_line_color=RED,
+                                   name="Gold"))
+    pv = [p_ for p_ in D["pivots"] if p_.i >= len(gold) - 160]
+    if pv:
+        fig.add_trace(go.Scatter(x=[gold.index[p_.i] for p_ in pv], y=[px(p_.price) for p_ in pv], mode="lines+markers",
+                                 line=dict(color=GOLD_C, width=1.2), name="Swing points"))
+    marks = [(d, k) for d in Pt.index[-160:] for k in Pt.columns if Pt.at[d, k] > 0]
+    if marks:
+        fig.add_trace(go.Scatter(x=[d for d, _ in marks], y=[px(gold.at[d, "close"]) for d, _ in marks], mode="markers",
+                                 marker=dict(size=9, symbol=["triangle-up" if PATTERN_INFO[k][1] > 0 else "triangle-down"
+                                                             for _, k in marks],
+                                             color=[GREEN if PATTERN_INFO[k][1] > 0 else RED for _, k in marks]),
+                                 text=[PATTERN_INFO[k][0] for _, k in marks], name="Patterns"))
+    fig.update_layout(template="plotly_dark", height=460, margin=dict(l=10, r=10, t=10, b=10),
+                      xaxis_rangeslider_visible=False, legend=dict(orientation="h", y=1.04))
+    st.plotly_chart(fig, width="stretch")
+    st.warning("**Tested result:** 20 patterns × 3 horizons on 26 years of daily data, plus 2 years of hourly data. "
+               "Only 3 of 120 tests looked significant in the earlier period (fewer than luck alone would produce), "
+               "and none held up on the later data. Example: triangle breakouts up were right 79% of the time in "
+               "2003–2018, then 53% in 2019–2026, below the 57% you'd get by always guessing 'up'. Treat patterns as "
+               "context, never as a reason to trade on their own.")
+    if not rec.empty:
+        with st.expander("Full pattern track record (every pattern, 1/5/10 days)"):
+            show = rec[rec["n"] >= 5].pivot_table(index=["pattern", "h"], columns="period", values=["n", "hit", "base"])
+            st.dataframe(show.round(3), width="stretch")
+
+# ------------------------------------------------------------------ ranges
+with tabs[2]:
     hist = c.iloc[-130:]
     future = pd.bdate_range(c.index[-1], periods=22)[1:]
     cone = R.cone
@@ -247,7 +321,7 @@ with tabs[1]:
                "on roughly 1 day in 10 by normal noise alone.")
 
 # ------------------------------------------------------------------ planner
-with tabs[2]:
+with tabs[3]:
     st.markdown("Plan a trade's risk before you take it. This sizes the position from **your** stop; it doesn't tell "
                 "you which way to trade.")
     p1, p2, p3 = st.columns(3)
@@ -287,7 +361,7 @@ with tabs[2]:
                f"reward to risk, you need to win more than {1 / (1 + rr):.0%} of trades, before costs and spread.")
 
 # ------------------------------------------------------------------ direction
-with tabs[3]:
+with tabs[4]:
     st.markdown("Each January, a regularised logistic model is retrained on all earlier data, using 23 gold drivers "
                 "(momentum, trend, the dollar, yields, real yields, VIX, silver, copper, oil, miners, ETF volume and "
                 "seasonality). Its 2019–2026 predictions are compared with the simplest baseline: always saying 'up'.")
@@ -306,7 +380,7 @@ with tabs[3]:
             "they were built on. This page shows the forecasts that held up on unseen data.")
 
 # ------------------------------------------------------------------ drivers
-with tabs[4]:
+with tabs[5]:
     dr = D["drivers"].copy()
     dr["1-month change"] = dr.apply(lambda r: f"{r['1-month change']:+.2f} pts" if r["kind"] == "diff"
                                     else f"{r['1-month change']:+.1%}", axis=1)
@@ -338,7 +412,7 @@ with tabs[4]:
                    "the forecasts (see 'What we tested'), so they appear here as context only.")
 
 # ------------------------------------------------------------------ psychology
-with tabs[5]:
+with tabs[6]:
     s1, s2, s3, s4 = st.columns(4)
     s1.metric("Fear & greed", f"{sent['greed_index']:.0f}/100")
     s2.metric("RSI(14)", f"{sent['rsi14']:.0f}", "oversold < 30, overbought > 70", delta_color="off")
@@ -355,7 +429,7 @@ with tabs[5]:
                "on their own.")
 
 # ------------------------------------------------------------------ strategies
-with tabs[6]:
+with tabs[7]:
     how = st.radio("How do you hold gold?", ["CFD / spot XAU/USD (pays ~6%/yr overnight financing on longs)",
                                              "ETF or physical (no financing)"], horizontal=True)
     S, curves = D["strategies_cfd"] if how.startswith("CFD") else D["strategies"]
@@ -377,7 +451,7 @@ with tabs[6]:
                "return a year in financing, so for holds longer than a few days an ETF is usually cheaper.")
 
 # ------------------------------------------------------------------ seasonality
-with tabs[7]:
+with tabs[8]:
     se = D["season"]
     fig = go.Figure(go.Bar(x=se.index, y=se["avg_return"], marker_color=[GREEN if v > 0 else RED for v in se["avg_return"]],
                            text=[f"{u:.0%} up" for u in se["up_share"]], textposition="outside"))
@@ -387,7 +461,7 @@ with tabs[7]:
     st.caption("About 26 observations per month: too few to trade on alone. January has historically been strong, "
                "March and the autumn weaker.")
 
-with tabs[8]:
+with tabs[9]:
     log = research_log()
     if not log:
         st.caption("Research log not found.")
@@ -401,7 +475,7 @@ with tabs[8]:
                 st.dataframe(pd.DataFrame(sec["table"]), hide_index=True, width="stretch")
         st.caption(f"Reproduce with the scripts in research/gold (data as of {log['data_as_of']}).")
 
-with tabs[9]:
+with tabs[10]:
     st.markdown(f"""
 **Price ranges:**
 - Volatility forecast = average of realised volatility (exponentially weighted, λ = 0.94) and gold's implied volatility (CBOE GVZ). This blend scored best on 2009–2018 data. It was chosen before any later data was examined.
