@@ -27,7 +27,9 @@ DISCLAIMER = ("Research tool, not financial advice. Gold's short-term direction 
 st.markdown("""<style>
 .block-container{padding-top:2rem;max-width:1400px}
 .card{border:1px solid #27334a;border-radius:14px;padding:16px 20px;background:#111a2e;height:100%}
-.big{font-size:1.9rem;font-weight:700;line-height:1.15}
+.big{font-size:clamp(1.15rem,2.1vw,1.7rem);font-weight:700;line-height:1.2}
+[data-testid="stMetricValue"]{font-size:clamp(1.05rem,1.9vw,1.75rem)}
+[data-testid="stMetricLabel"] p{white-space:normal}
 .muted{color:#94a3b8;font-size:.86rem}
 .tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.78rem;font-weight:600;margin-right:6px}
 </style>""", unsafe_allow_html=True)
@@ -90,7 +92,8 @@ any_edge = bool(dirs["reliable"].any())
 r1 = R.bands[(R.bands.days == 1) & (R.bands.level == 0.8)].iloc[0]
 r5 = R.bands[(R.bands.days == 5) & (R.bands.level == 0.8)].iloc[0]
 
-k1, k2, k3, k4, k5 = st.columns(5)
+k1, k2, k3 = st.columns(3)
+k4, k5, k6 = st.columns(3)
 k1.metric("Gold" + (" (your broker)" if scale != 1 else " (COMEX futures)"), money(px(last)), f"{last / prev - 1:+.2%}")
 k2.metric("Trend", trend, f"{last / sma200 - 1:+.1%} vs 200-day", delta_color="off")
 k3.metric("Daily volatility", f"±{R.sigma:.2%}", f"±${px(last) * R.sigma:,.0f} per oz, 1 sd", delta_color="off")
@@ -99,6 +102,8 @@ k4.metric("Fear & greed (gold)", f"{sent['greed_index']:.0f}/100",
           "neutral" if sent["greed_index"] < 60 else "greed" if sent["greed_index"] < 80 else "extreme greed",
           delta_color="off")
 k5.metric("From all-time high", f"{sent['drawdown_from_high']:.1%}")
+k6.metric("Gold VIX (GVZ)", f"{sent['gvz']:.1f}" if sent["gvz"] else "—",
+          f"{sent['gvz_percentile']:.0%} percentile" if sent["gvz_percentile"] is not None else None, delta_color="off")
 st.caption(f"Last daily bar: {gold.index[-1]:%a %d %b %Y} (Yahoo Finance, delayed). Refreshed {D['loaded']:%H:%M} UTC; "
            "updates every 15 minutes.")
 
@@ -120,7 +125,7 @@ with b:
     </div></div>""", unsafe_allow_html=True)
 with cc:
     st.markdown(f"""<div class="card"><div class="muted">Risk signal</div>
-    <div class="big" style="color:{trend_col}">{trend} · size ×{size_mult:.1f}</div>
+    <div class="big" style="color:{trend_col}">{trend}<br>Size ×{size_mult:.1f}</div>
     <div class="muted">Volatility is at its {sent['vol_percentile']:.0%} percentile. Volatility-sizing
     (15% annual target) suggests <b>{size_mult:.1f}×</b> a normal position. That rule had the best risk-adjusted
     result of all tested strategies.</div></div>""", unsafe_allow_html=True)
