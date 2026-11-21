@@ -12,13 +12,13 @@
      "Result": "explains same-day moves; no forecasting gain"
     },
     {
-     "Driver": "Real yields (TIP ETF; official TIPS yield shown live)",
+     "Driver": "Real yields (TIP ETF proxy; official TIPS yield from FRED when reachable)",
      "Source": "Yahoo / FRED",
      "Tested in models": "yes (TIP proxy)",
      "Result": "no forecasting gain"
     },
     {
-     "Driver": "Inflation expectations (TIP vs IEF; 10y breakeven shown live)",
+     "Driver": "Inflation expectations (TIP vs IEF proxy)",
      "Source": "Yahoo / FRED",
      "Tested in models": "yes (proxy)",
      "Result": "no forecasting gain"
@@ -75,7 +75,7 @@
      "Driver": "Policy uncertainty (EPU)",
      "Source": "FRED",
      "Tested in models": "no (download blocked during research)",
-     "Result": "shown live as context"
+     "Result": "not included (FRED unreachable from the research machine and the cloud host)"
     },
     {
      "Driver": "Geopolitical risk index (GPR)",

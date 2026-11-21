@@ -259,8 +259,10 @@ with tabs[3]:
         ex = ex.copy()
         ex["latest"] = ex.apply(lambda r: f"{r['latest']:.1%}" if r["unit"] == "% of open interest"
                                 else f"{r['latest']:,.2f}", axis=1)
-        ex["1-month change"] = ex.apply(lambda r: f"{r['1-month change']:+.1%}" if r["unit"] in ("ratio", "INR", "CNY", "USD")
-                                        else f"{r['1-month change']:+.2f}", axis=1)
+        ex["1-month change"] = ex.apply(
+            lambda r: f"{r['1-month change'] * 100:+.1f} pts" if r["unit"] == "% of open interest"
+            else f"{r['1-month change']:+.1%}" if r["unit"] in ("ratio", "INR", "CNY", "USD")
+            else f"{r['1-month change']:+.2f}", axis=1)
         st.dataframe(ex.drop(columns="unit"), hide_index=True, width="stretch", column_config={
             "3-year percentile": st.column_config.ProgressColumn(min_value=0, max_value=1, format="percent")})
         st.caption("Each of these drivers was added to the forecasting models and tested on 2019–2026. None improved "
