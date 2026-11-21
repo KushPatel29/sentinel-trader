@@ -18,6 +18,7 @@ import streamlit as st  # noqa: E402
 
 from sentinel.gold import model as M  # noqa: E402
 from sentinel.gold.data import load_universe  # noqa: E402
+from sentinel.gold.plan import todays_plan  # noqa: E402
 
 GOLD_C, GREEN, RED, GREY, BLUE = "#f5c542", "#22c55e", "#ef4444", "#94a3b8", "#3b82f6"
 DISCLAIMER = ("Research tool, not financial advice. Gold's short-term direction has not been predictable in our tests; "
@@ -44,6 +45,7 @@ def compute():
         "drivers": M.drivers(gold, ctx), "sentiment": M.sentiment(gold, ctx),
         "strategies": M.strategies(gold), "strategies_cfd": M.strategies(gold, financing_annual=0.06),
         "season": M.seasonality(gold), "loaded": pd.Timestamp.utcnow(),
+        "plan": todays_plan(gold, ctx),
     }
     print(f"[gold] computed in {time.time() - t0:.1f}s", flush=True)
     return out
@@ -144,11 +146,65 @@ with cc:
     (15% annual target) suggests <b>{size_mult:.1f}×</b> a normal position. That rule had the best risk-adjusted
     result of all tested strategies.</div></div>""", unsafe_allow_html=True)
 
-tabs = st.tabs(["📏 Price ranges", "🎯 Trade planner", "🧭 Direction tests", "🌍 What's moving gold",
+P = D["plan"]
+plan_col = {"ENTER LONG": GREEN, "HOLD LONG": GREEN, "EXIT": RED, "STAND ASIDE": GREY}[P.action]
+if P.action == "STAND ASIDE":
+    detail = (f"Gold is not in an uptrend. The plan buys only after a daily close above <b>{money(px(P.trigger_above))}</b> "
+              f"(above both the 50-day average {money(px(P.sma50))} and the 200-day {money(px(P.sma200))}).")
+elif P.action == "EXIT":
+    detail = (f"Close the long position. Re-entry needs a close above {money(px(P.trigger_above))}.")
+elif P.action == "ENTER LONG":
+    detail = (f"Buy at the next open (~{money(px(P.entry))}). Initial stop-loss <b>{money(px(P.stop))}</b>. The stop "
+              "then trails 2 daily volatilities below the best close. Exit at the stop, or at the open after gold "
+              "closes below its 50- or 200-day average.")
+else:
+    detail = (f"Holding from {money(px(P.entry))}. Trailing stop-loss now <b>{money(px(P.stop))}</b>: move your stop "
+              "here (never lower). Exit at the stop, or at the open after a close below the 50- or 200-day average.")
+st.markdown(f"""<div class="card" style="margin:14px 0;border-color:{plan_col}">
+<div class="muted">TODAY'S TRADE PLAN · rule: trend-following long with trailing stop (see 🗓️ Daily plan)</div>
+<div class="big" style="color:{plan_col}">{P.action}</div><div>{detail}</div></div>""", unsafe_allow_html=True)
+
+tabs = st.tabs(["🗓️ Daily plan", "📏 Price ranges", "🎯 Trade planner", "🧭 Direction tests", "🌍 What's moving gold",
                 "🧠 Psychology & demand", "📈 Strategies", "📅 Seasonality", "🔬 What we tested", "ℹ️ Method"])
 
-# ------------------------------------------------------------------ ranges
+# ------------------------------------------------------------------ daily plan
 with tabs[0]:
+    st.markdown("""**The rule** (fixed in advance; chosen on 2006–2018 out of 12 plan designs, then tested on 2019–2026):
+1. **Entry:** when gold closes above both its 50-day and 200-day averages, buy at the next open.
+2. **Stop-loss:** 2 daily volatilities below the best close since entry. It only moves up (a trailing stop).
+3. **Exit:** at the stop-loss, or at the next open after gold closes below either average.
+4. **Size:** use the Trade planner so a stop-out costs at most your chosen % of the account.
+
+The plan needs no up/down forecast. It follows trends and cuts losing trades early. It is checked every day after the
+close, so act at the next open.""")
+    stt = P.stats.copy()
+    if not stt.empty:
+        st.markdown("**Real track record of this exact rule** (spread, slippage and 6%/yr CFD financing included):")
+        st.dataframe(stt, hide_index=True, width="stretch", column_config={
+            k: st.column_config.NumberColumn(format="percent") for k in
+            ["win_rate", "avg_win", "avg_loss", "annual_return", "worst_trade", "max_drawdown"]} |
+            {"avg_days_held": st.column_config.NumberColumn(format="%.1f")})
+        recent = stt.iloc[-1]
+        st.warning(f"**What to expect:** only about {recent.win_rate:.0%} of trades win. Losing trades average "
+                   f"{recent.avg_loss:.1%} and winners {recent.avg_win:+.1%}. Runs of {int(recent.worst_losing_streak)} losses "
+                   f"in a row have happened, and the account has fallen {recent.max_drawdown:.0%} from a peak. In 2008–2018 "
+                   "the rule roughly broke even. **It will lose money on some trades, some months and possibly some "
+                   "years.** No rule can avoid losses.")
+    tr = P.trades.tail(15).iloc[::-1].copy()
+    if not tr.empty:
+        st.markdown("**Last 15 trades of the rule**")
+        for col in ("entry", "exit"):
+            tr[col] = tr[col].map(lambda v: money(px(v)))
+        tr["return"] = tr["return"].map(lambda v: f"{v:+.2%}")
+        tr["entry_date"] = pd.to_datetime(tr["entry_date"]).dt.date
+        tr["exit_date"] = pd.to_datetime(tr["exit_date"]).dt.date
+        st.dataframe(tr[["entry_date", "entry", "exit_date", "exit", "reason", "days", "return"]], hide_index=True,
+                     width="stretch")
+    st.caption("Levels are on COMEX gold futures. Enter your broker's price in the sidebar to convert them. The plan updates "
+               "with each new daily close.")
+
+# ------------------------------------------------------------------ ranges
+with tabs[1]:
     hist = c.iloc[-130:]
     future = pd.bdate_range(c.index[-1], periods=22)[1:]
     cone = R.cone
@@ -178,7 +234,7 @@ with tabs[0]:
                "on roughly 1 day in 10 by normal noise alone.")
 
 # ------------------------------------------------------------------ planner
-with tabs[1]:
+with tabs[2]:
     st.markdown("Plan a trade's risk before you take it. This sizes the position from **your** stop; it doesn't tell "
                 "you which way to trade.")
     p1, p2, p3 = st.columns(3)
@@ -218,7 +274,7 @@ with tabs[1]:
                f"reward to risk, you need to win more than {1 / (1 + rr):.0%} of trades, before costs and spread.")
 
 # ------------------------------------------------------------------ direction
-with tabs[2]:
+with tabs[3]:
     st.markdown("Each January, a regularised logistic model is retrained on all earlier data, using 23 gold drivers "
                 "(momentum, trend, the dollar, yields, real yields, VIX, silver, copper, oil, miners, ETF volume and "
                 "seasonality). Its 2019–2026 predictions are compared with the simplest baseline: always saying 'up'.")
@@ -237,7 +293,7 @@ with tabs[2]:
             "they were built on. This page shows the forecasts that held up on unseen data.")
 
 # ------------------------------------------------------------------ drivers
-with tabs[3]:
+with tabs[4]:
     dr = D["drivers"].copy()
     dr["1-month change"] = dr.apply(lambda r: f"{r['1-month change']:+.2f} pts" if r["kind"] == "diff"
                                     else f"{r['1-month change']:+.1%}", axis=1)
@@ -269,7 +325,7 @@ with tabs[3]:
                    "the forecasts (see 'What we tested'), so they appear here as context only.")
 
 # ------------------------------------------------------------------ psychology
-with tabs[4]:
+with tabs[5]:
     s1, s2, s3, s4 = st.columns(4)
     s1.metric("Fear & greed", f"{sent['greed_index']:.0f}/100")
     s2.metric("RSI(14)", f"{sent['rsi14']:.0f}", "oversold < 30, overbought > 70", delta_color="off")
@@ -286,7 +342,7 @@ with tabs[4]:
                "on their own.")
 
 # ------------------------------------------------------------------ strategies
-with tabs[5]:
+with tabs[6]:
     how = st.radio("How do you hold gold?", ["CFD / spot XAU/USD (pays ~6%/yr overnight financing on longs)",
                                              "ETF or physical (no financing)"], horizontal=True)
     S, curves = D["strategies_cfd"] if how.startswith("CFD") else D["strategies"]
@@ -308,7 +364,7 @@ with tabs[5]:
                "return a year in financing, so for holds longer than a few days an ETF is usually cheaper.")
 
 # ------------------------------------------------------------------ seasonality
-with tabs[6]:
+with tabs[7]:
     se = D["season"]
     fig = go.Figure(go.Bar(x=se.index, y=se["avg_return"], marker_color=[GREEN if v > 0 else RED for v in se["avg_return"]],
                            text=[f"{u:.0%} up" for u in se["up_share"]], textposition="outside"))
@@ -318,7 +374,7 @@ with tabs[6]:
     st.caption("About 26 observations per month: too few to trade on alone. January has historically been strong, "
                "March and the autumn weaker.")
 
-with tabs[7]:
+with tabs[8]:
     log = research_log()
     if not log:
         st.caption("Research log not found.")
@@ -332,7 +388,7 @@ with tabs[7]:
                 st.dataframe(pd.DataFrame(sec["table"]), hide_index=True, width="stretch")
         st.caption(f"Reproduce with the scripts in research/gold (data as of {log['data_as_of']}).")
 
-with tabs[8]:
+with tabs[9]:
     st.markdown(f"""
 **Price ranges:**
 - Volatility forecast = average of realised volatility (exponentially weighted, λ = 0.94) and gold's implied volatility (CBOE GVZ). This blend scored best on 2009–2018 data. It was chosen before any later data was examined.

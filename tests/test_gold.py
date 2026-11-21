@@ -92,3 +92,19 @@ def test_extended_drivers_offline(tmp_path, monkeypatch):
     assert "Hedge-fund net position (CFTC)" in names and "Bitcoin" in names
     assert not any("real yield" in n for n in names)          # FRED offline -> silently skipped
     assert t["3-year percentile"].between(0, 1).all()
+
+
+def test_daily_plan_is_consistent(uni):
+    from sentinel.gold.plan import todays_plan
+    gold, ctx = uni
+    p = todays_plan(gold, ctx)
+    assert p.action in {"ENTER LONG", "HOLD LONG", "EXIT", "STAND ASIDE"}
+    T = p.trades
+    assert len(T) > 10
+    assert (pd.to_datetime(T["exit_date"]) >= pd.to_datetime(T["entry_date"])).all()
+    stop_exits = T[T["reason"] == "trailing stop"]
+    assert (stop_exits["exit"] <= stop_exits["stop_at_exit"] + 1e-9).all()       # never filled better than the stop
+    if p.action in ("ENTER LONG", "HOLD LONG"):
+        assert p.stop < gold["close"].iloc[-1]
+    else:
+        assert p.trigger_above == pytest.approx(max(p.sma50, p.sma200))
