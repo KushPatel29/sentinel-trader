@@ -108,3 +108,22 @@ def test_daily_plan_is_consistent(uni):
         assert p.stop < gold["close"].iloc[-1]
     else:
         assert p.trigger_above == pytest.approx(max(p.sma50, p.sma200))
+
+
+def test_unfinished_session_is_not_used_for_signals():
+    from sentinel.gold.data import split_provisional
+    g = pd.DataFrame({"close": [1.0, 2.0]}, index=pd.to_datetime(["2026-11-19", "2026-11-20"]))
+    during, live = split_provisional(g, pd.Timestamp("2026-11-20 15:00", tz="UTC"))     # 10:00 New York
+    assert live["provisional"] and len(during) == 1 and live["price"] == 2.0
+    after, live = split_provisional(g, pd.Timestamp("2026-11-20 22:30", tz="UTC"))      # 17:30 New York
+    assert not live["provisional"] and len(after) == 2
+    next_session, live = split_provisional(g, pd.Timestamp("2026-11-19 23:30", tz="UTC"))  # Thu 18:30, Friday bar open
+    assert live["provisional"] and len(next_session) == 1
+
+
+def test_plan_reports_one_percent_risk_results(uni):
+    from sentinel.gold.plan import todays_plan
+    gold, ctx = uni
+    st_ = todays_plan(gold, ctx).stats
+    assert {"account_return_1pct_risk", "account_drawdown_1pct_risk"} <= set(st_.columns)
+    assert (st_["account_drawdown_1pct_risk"] <= 0).all()

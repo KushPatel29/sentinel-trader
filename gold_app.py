@@ -110,7 +110,10 @@ r5 = R.bands[(R.bands.days == 5) & (R.bands.level == 0.8)].iloc[0]
 
 k1, k2, k3 = st.columns(3)
 k4, k5, k6 = st.columns(3)
-k1.metric("Gold" + (" (your broker)" if scale != 1 else " (COMEX futures)"), money(px(last)), f"{last / prev - 1:+.2%}")
+LIVE = gold.attrs.get("live", {})
+live_px = LIVE.get("price", last)
+k1.metric("Gold" + (" (your broker)" if scale != 1 else " (COMEX futures)") + (" · live" if LIVE.get("provisional") else ""),
+          money(px(live_px)), f"{live_px / last - 1:+.2%} vs last close" if LIVE.get("provisional") else f"{last / prev - 1:+.2%}")
 k2.metric("Trend", trend, f"{last / sma200 - 1:+.1%} vs 200-day", delta_color="off")
 k3.metric("Daily volatility", f"±{R.sigma:.2%}", f"±${px(last) * R.sigma:,.0f} per oz, 1 sd", delta_color="off")
 k4.metric("Fear & greed (gold)", f"{sent['greed_index']:.0f}/100",
@@ -120,8 +123,10 @@ k4.metric("Fear & greed (gold)", f"{sent['greed_index']:.0f}/100",
 k5.metric("From all-time high", f"{sent['drawdown_from_high']:.1%}")
 k6.metric("Gold VIX (GVZ)", f"{sent['gvz']:.1f}" if sent["gvz"] else "—",
           f"{sent['gvz_percentile']:.0%} percentile" if sent["gvz_percentile"] is not None else None, delta_color="off")
-st.caption(f"Last daily bar: {gold.index[-1]:%a %d %b %Y} (Yahoo Finance, delayed). Refreshed {D['loaded']:%H:%M} UTC; "
-           "updates every 15 minutes.")
+st.caption((f"Session in progress: live price shown above (delayed ~10 min). The plan, ranges and signals use the last "
+            f"COMPLETED close, {gold.index[-1]:%a %d %b %Y} ({money(px(last))}). They update after 17:00 New York time. "
+            if LIVE.get("provisional") else f"Last completed session: {gold.index[-1]:%a %d %b %Y}. ")
+           + f"Data: Yahoo Finance. Refreshed {D['loaded']:%H:%M} UTC; checked every 15 minutes.")
 
 # ------------------------------------------------------------------ the signal, in plain words
 st.markdown("### Today's gold signal")
@@ -154,9 +159,11 @@ if P.action == "STAND ASIDE":
 elif P.action == "EXIT":
     detail = (f"Close the long position. Re-entry needs a close above {money(px(P.trigger_above))}.")
 elif P.action == "ENTER LONG":
-    detail = (f"Buy at the next open (~{money(px(P.entry))}). Initial stop-loss <b>{money(px(P.stop))}</b>. The stop "
-              "then trails 2 daily volatilities below the best close. Exit at the stop, or at the open after gold "
-              "closes below its 50- or 200-day average.")
+    oz = account * risk_pct / max(1e-9, px(P.entry) - px(P.stop))
+    detail = (f"Buy at the next open (~{money(px(P.entry))}). Initial stop-loss <b>{money(px(P.stop))}</b>. "
+              f"Size for your {risk_pct:.2%} risk: <b>{oz:,.2f} oz ({oz / lot_oz:.3f} lots)</b>. The stop then trails "
+              "2 daily volatilities below the best close. Exit at the stop, or at the open after gold closes below "
+              "its 50- or 200-day average.")
 else:
     detail = (f"Holding from {money(px(P.entry))}. Trailing stop-loss now <b>{money(px(P.stop))}</b>: move your stop "
               "here (never lower). Exit at the stop, or at the open after a close below the 50- or 200-day average.")
@@ -182,7 +189,8 @@ close, so act at the next open.""")
         st.markdown("**Real track record of this exact rule** (spread, slippage and 6%/yr CFD financing included):")
         st.dataframe(stt, hide_index=True, width="stretch", column_config={
             k: st.column_config.NumberColumn(format="percent") for k in
-            ["win_rate", "avg_win", "avg_loss", "annual_return", "worst_trade", "max_drawdown"]} |
+            ["win_rate", "avg_win", "avg_loss", "annual_return", "worst_trade", "max_drawdown",
+             "account_return_1pct_risk", "account_drawdown_1pct_risk"]} |
             {"avg_days_held": st.column_config.NumberColumn(format="%.1f")})
         recent = stt.iloc[-1]
         st.warning(f"**What to expect:** only about {recent.win_rate:.0%} of trades win. Losing trades average "
@@ -190,6 +198,11 @@ close, so act at the next open.""")
                    f"in a row have happened, and the account has fallen {abs(recent.max_drawdown):.0%} from a peak. In 2008–2018 "
                    "the rule roughly broke even. **It will lose money on some trades, some months and possibly some "
                    "years.** No rule can avoid losses.")
+        st.info(f"**Sized at 1% risk per trade** (position = 1% of the account ÷ distance to the first stop), the account "
+                f"grew {recent.account_return_1pct_risk:+.1%} a year on 2019–2026, with a worst fall of "
+                f"{abs(recent.account_drawdown_1pct_risk):.0%}: smaller swings than trading the full position. "
+                "We also tested 80 variations of the rule (trend averages, stop distance, entry confirmation). "
+                "Settings that looked best on 2006–2018 did worse afterwards, so the rule is deliberately left untuned.")
     tr = P.trades.tail(15).iloc[::-1].copy()
     if not tr.empty:
         st.markdown("**Last 15 trades of the rule**")

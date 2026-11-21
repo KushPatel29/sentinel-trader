@@ -48,7 +48,8 @@ def simulate(gold: pd.DataFrame, ctx: pd.DataFrame, financing: float = FINANCING
     for i in range(1, len(c)):
         d = c.index[i]
         if pending_entry:                                    # yesterday's close said uptrend: buy at today's open
-            state = {"in": True, "entry_date": d, "entry": o.iloc[i], "best": c.iloc[i - 1], "days": 0}
+            state = {"in": True, "entry_date": d, "entry": o.iloc[i], "best": c.iloc[i - 1], "days": 0,
+                     "initial_stop": c.iloc[i - 1] * np.exp(-STOP_SD * s.iloc[i - 1])}
             pending_entry = False
         if state["in"]:
             stop = state["best"] * np.exp(-STOP_SD * s.iloc[i - 1])
@@ -75,8 +76,13 @@ def simulate(gold: pd.DataFrame, ctx: pd.DataFrame, financing: float = FINANCING
 def _close(state: dict, d, px: float, why: str, financing: float) -> dict:
     gross = np.log(px / state["entry"])
     net = gross - COST - (SLIP if why == "trailing stop" else 0) - financing * state["days"]
+    risk = max(1e-4, 1 - state["initial_stop"] / state["entry"])       # loss fraction if the first stop is hit
     return {"entry_date": state["entry_date"], "entry": state["entry"], "exit_date": d, "exit": px, "reason": why,
-            "days": state["days"], "return": np.exp(net) - 1}
+            "days": state["days"], "return": np.exp(net) - 1, "initial_stop": state["initial_stop"], "risk": risk}
+
+
+RISK_PER_TRADE = 0.01
+MAX_LEVERAGE = 3.0
 
 
 def period_stats(T: pd.DataFrame, a: str, b: str) -> dict:
@@ -84,6 +90,9 @@ def period_stats(T: pd.DataFrame, a: str, b: str) -> dict:
     if t.empty:
         return {}
     r = t["return"]
+    # account-level result when every trade is sized so the initial stop costs 1% of the account
+    f = (RISK_PER_TRADE / t["risk"]).clip(upper=MAX_LEVERAGE)
+    acct = (1 + f * r).cumprod()
     eq = (1 + r).cumprod()
     years = (pd.Timestamp(b) - pd.Timestamp(a)).days / 365.25
     streak = worst = 0
@@ -94,7 +103,9 @@ def period_stats(T: pd.DataFrame, a: str, b: str) -> dict:
             "avg_win": float(r[r > 0].mean()), "avg_loss": float(r[r < 0].mean()),
             "annual_return": float(eq.iloc[-1] ** (1 / years) - 1), "worst_trade": float(r.min()),
             "max_drawdown": float((eq / eq.cummax() - 1).min()), "worst_losing_streak": worst,
-            "avg_days_held": float(t["days"].mean())}
+            "avg_days_held": float(t["days"].mean()),
+            "account_return_1pct_risk": float(acct.iloc[-1] ** (1 / years) - 1),
+            "account_drawdown_1pct_risk": float((acct / acct.cummax() - 1).min())}
 
 
 def todays_plan(gold: pd.DataFrame, ctx: pd.DataFrame, financing: float = FINANCING) -> Plan:

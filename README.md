@@ -15,7 +15,23 @@
 - The only "profitable" pattern (range breakouts) disappeared once fills were modelled realistically.
 - CFD financing (~6%/yr) cut buy & hold from 13.7% to 9.0% a year.
 
-The paper bot (`config/config.yaml`) now trades **GLD** only. The **Gold bot lab** page runs its 15-minute walk-forward backtest and forward simulation on GLD. Crypto, oil and the multi-asset analyzer are preserved in the repo but removed from the public navigation.
+### Daily gold plan (entry, stop-loss, exit)
+
+The Gold page's **Daily plan** tab and banner apply one fixed rule:
+- **Entry:** buy at the next open after a close above both the 50- and 200-day averages.
+- **Stop-loss:** trails 2 daily volatilities below the best close.
+- **Exit:** at the stop, or at the next open after a close below either average.
+
+Track record with costs: 2008–2018 about flat; 2019–2026 +6.3%/yr; 37% winning trades; worst losing streak 8. Sized at 1% risk per trade: +3.9%/yr with a −11% worst drawdown. Tuning 80 variants on 2006–2018 made 2019–2026 *worse* (rank correlation −0.33), so the rule is deliberately untuned (`research/gold/plan_tune.py`). Signals use completed sessions only; an in-progress daily bar is shown as the live price but never feeds the plan.
+
+**Automate it on Alpaca paper (GLD):** `sentinel gold-plan --dry-run` shows what it would do. Each run:
+- queues a risk-sized market buy for the next open, with an attached stop;
+- raises (never lowers) a GTC trailing stop;
+- or sells at the next open when the plan says exit.
+
+On Windows, run `run_gold_plan.bat` once a day, or `schedule_gold_plan.bat` to schedule it every morning at 08:00 local time (after the US close).
+
+The intraday paper bot (`config/config.yaml`) trades **GLD** only. The **Gold bot lab** page runs its 15-minute walk-forward backtest and forward simulation on GLD. Crypto, oil and the multi-asset analyzer are preserved in the repo but removed from the public navigation.
 
 ## LSTM, TFT, Random Forest and real-data paper challengers
 

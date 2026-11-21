@@ -11,6 +11,7 @@ Scripts behind the Gold page's evidence. Every model and setting was chosen on *
 | `profit.py` | Strategy tests with spread, slippage and CFD financing |
 | `breakout_check.py` | Stress test that exposed the breakout backtest artefact |
 | `plans.py` | 12 daily entry/stop/exit plan designs (day trades and trend swings), chosen on 2006–2018 |
+| `plan_tune.py` | 80 variants of the daily plan; dev-only selection, walk-forward re-selection (`plan_tuning_results.csv`) |
 | `timeofday.py` | Hour-of-day and weekday up/down patterns, tested out of sample |
 
 `results.json` is the summary the app shows in **What we tested**.

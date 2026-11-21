@@ -58,6 +58,26 @@ def fetch_fred(series_id: str) -> pd.Series:
     return s.dropna()
 
 
+def fetch_treasury_real_yield() -> pd.Series:
+    """10-year real yield from the US Treasury's daily real yield curve (fallback when FRED is unreachable)."""
+    if os.environ.get("SENTINEL_DISABLE_LIVE") or os.environ.get("SENTINEL_OFFLINE_GOLD"):
+        raise RuntimeError("live data disabled")
+    import requests
+
+    year = pd.Timestamp.now().year
+    parts = []
+    for y in (year - 2, year - 1, year):
+        url = ("https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/"
+               f"{y}/all")
+        r = requests.get(url, params={"type": "daily_treasury_real_yield_curve", "field_tdr_date_value": y,
+                                      "page": "", "_format": "csv"}, headers=UA, timeout=20)
+        r.raise_for_status()
+        df = pd.read_csv(io.StringIO(r.text))
+        col = [c for c in df.columns if c.strip().upper().startswith("10")]
+        parts.append(pd.Series(pd.to_numeric(df[col[0]], errors="coerce").values, index=pd.to_datetime(df["Date"])))
+    return pd.concat(parts).sort_index().dropna()
+
+
 def _extra_daily(sym: str) -> pd.Series:
     path = os.environ.get("SENTINEL_OFFLINE_GOLD_EXTRA")
     if path:
@@ -95,7 +115,12 @@ def extended_drivers() -> pd.DataFrame:
         ("policy_uncertainty", "USEPUINDXD", "US policy uncertainty index", "index", "Uncertainty drives haven demand"),
     ):
         try:
-            s = fetch_fred(sid)
+            try:
+                s = fetch_fred(sid)
+            except Exception:
+                if sid != "DFII10":
+                    raise
+                s = fetch_treasury_real_yield()
             add(name, s.iloc[-1], s.iloc[-1] - s.asof(s.index[-1] - pd.Timedelta(days=30)), pct_rank(s), unit, why)
         except Exception:
             pass

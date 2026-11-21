@@ -7,6 +7,7 @@
   sentinel live [--confirm-live]     trade on Alpaca (paper unless mode: live and confirmed)
   sentinel status                    account, positions and recent risk events
   sentinel flatten                   cancel orders and close positions in the configured symbols
+  sentinel gold-plan [--dry-run]     execute the daily gold plan on Alpaca (GLD), once a day after the close
 """
 from __future__ import annotations
 
@@ -214,6 +215,26 @@ def cmd_status(cfg: Config, args) -> None:
         print("\nrecent risk events:\n" + ev.to_string(index=False))
 
 
+def cmd_gold_plan(cfg: Config, args) -> None:
+    """Run the daily gold plan once against Alpaca (GLD). Schedule it daily after the US close."""
+    from alpaca.trading.client import TradingClient
+
+    from sentinel.gold.plan_bot import run
+    from sentinel.live.runner import check_live_allowed
+
+    secrets = Secrets.from_env()
+    paper = check_live_allowed(cfg, secrets, args.confirm_live)
+    key, secret = secrets.require_alpaca()
+    plan, intent = run(TradingClient(key, secret, paper=paper), risk=args.risk, dry_run=args.dry_run)
+    mode = ("PAPER" if paper else "LIVE") + (", DRY RUN" if args.dry_run else "")
+    print(f"\nGold plan ({mode}): {plan.action}: {plan.headline}")
+    if plan.entry:
+        print(f"  entry ~{plan.entry:,.2f}  stop {plan.stop:,.2f}")
+    if plan.trigger_above:
+        print(f"  buy trigger: daily close above {plan.trigger_above:,.2f}")
+    print(f"  action taken: {intent.kind} {intent.qty or ''} {intent.note}")
+
+
 def cmd_flatten(cfg: Config, args) -> None:
     async def go():
         b = _broker(cfg)
@@ -242,6 +263,10 @@ def main(argv: list[str] | None = None) -> None:
     lv = sub.add_parser("live")
     lv.add_argument("--confirm-live", action="store_true")
     sub.add_parser("status")
+    gp = sub.add_parser("gold-plan", help="execute the daily gold plan on Alpaca (GLD); run after the US close")
+    gp.add_argument("--risk", type=float, default=0.01, help="fraction of equity lost if the initial stop is hit")
+    gp.add_argument("--dry-run", action="store_true", help="show what would be done without sending orders")
+    gp.add_argument("--confirm-live", action="store_true")
     fl = sub.add_parser("flatten")
     fl.add_argument("--all", action="store_true", help="also close positions outside the configured symbols")
     args = ap.parse_args(argv)
@@ -249,7 +274,7 @@ def main(argv: list[str] | None = None) -> None:
     _setup_logging(args.verbose)
     cfg = load_config(args.config)
     handlers = {"fetch": cmd_fetch, "train": cmd_train, "backtest": cmd_backtest, "replay": cmd_replay,
-                "live": cmd_live, "status": cmd_status, "flatten": cmd_flatten}
+                "live": cmd_live, "status": cmd_status, "flatten": cmd_flatten, "gold-plan": cmd_gold_plan}
     try:
         handlers[args.cmd](cfg, args)
     except KeyboardInterrupt:

@@ -69,10 +69,29 @@ def fetch_daily(ticker: str) -> pd.DataFrame:
     return _chart_daily(ticker)
 
 
-def load_universe(fetch=fetch_daily) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Returns (gold OHLCV, context closes aligned to gold's calendar plus GLD volume)."""
+SESSION_CLOSE_HOUR_NY = 17   # COMEX gold's daily session ends 17:00 New York time
+
+
+def split_provisional(gold: pd.DataFrame, now: pd.Timestamp | None = None) -> tuple[pd.DataFrame, dict]:
+    """Yahoo includes the still-trading day as the last daily bar. Forecasts, ranges and the trade plan must use
+    completed sessions only, so an in-progress bar is removed and reported separately as the live quote."""
+    now_ny = (now or pd.Timestamp.now(tz="UTC")).tz_convert("America/New_York")
+    last_day = gold.index[-1].date()
+    today = now_ny.date()
+    provisional = last_day > today or (last_day == today and now_ny.hour < SESSION_CLOSE_HOUR_NY)
+    live = {"price": float(gold["close"].iloc[-1]), "bar_date": gold.index[-1], "provisional": bool(provisional),
+            "as_of": now_ny}
+    if provisional and len(gold) > 1:
+        gold = gold.iloc[:-1]
+    return gold, live
+
+
+def load_universe(fetch=fetch_daily, now: pd.Timestamp | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Returns (gold OHLCV of COMPLETED sessions, context closes aligned to gold's calendar plus GLD volume).
+    The live quote (possibly from an unfinished session) is in gold.attrs['live']."""
     gold = fetch(GOLD)
     gold = gold[gold["close"] > 0]
+    gold, live = split_provisional(gold, now)
     ctx = pd.DataFrame(index=gold.index)
     for key, sym in CONTEXT.items():
         try:
@@ -82,4 +101,5 @@ def load_universe(fetch=fetch_daily) -> tuple[pd.DataFrame, pd.DataFrame]:
         ctx[key] = d["close"].reindex(gold.index.union(d.index)).ffill().reindex(gold.index)
         if key == "gld":
             ctx["gld_volume"] = d["volume"].reindex(gold.index)
+    gold.attrs["live"] = live
     return gold, ctx
