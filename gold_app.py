@@ -187,7 +187,7 @@ close, so act at the next open.""")
         recent = stt.iloc[-1]
         st.warning(f"**What to expect:** only about {recent.win_rate:.0%} of trades win. Losing trades average "
                    f"{recent.avg_loss:.1%} and winners {recent.avg_win:+.1%}. Runs of {int(recent.worst_losing_streak)} losses "
-                   f"in a row have happened, and the account has fallen {recent.max_drawdown:.0%} from a peak. In 2008–2018 "
+                   f"in a row have happened, and the account has fallen {abs(recent.max_drawdown):.0%} from a peak. In 2008–2018 "
                    "the rule roughly broke even. **It will lose money on some trades, some months and possibly some "
                    "years.** No rule can avoid losses.")
     tr = P.trades.tail(15).iloc[::-1].copy()
