@@ -63,3 +63,32 @@ def test_position_size():
     p = M.position_size(10_000, 0.01, entry=2000, stop=1980, oz_per_lot=100)
     assert p["ounces"] == pytest.approx(5.0) and p["lots"] == pytest.approx(0.05)
     assert M.position_size(10_000, 0.01, 2000, 2000)["ounces"] == 0
+
+
+def test_financing_lowers_long_returns(uni):
+    gold, _ = uni
+    a, _ = M.strategies(gold, start="2015-01-01")
+    b, _ = M.strategies(gold, start="2015-01-01", financing_annual=0.06)
+    ra = a.set_index("strategy")["annual_return"]
+    rb = b.set_index("strategy")["annual_return"]
+    assert rb["Buy & hold"] < ra["Buy & hold"] - 0.04
+
+
+def test_extended_drivers_offline(tmp_path, monkeypatch):
+    import json
+
+    from sentinel.gold import extra
+    cot = [{"report_date_as_yyyy_mm_dd": f"2026-0{m}-0{d}T00:00:00.000", "m_money_positions_long_all": str(100 + m * d),
+            "m_money_positions_short_all": "20", "open_interest_all": "400"} for m in range(1, 10) for d in (1, 8)]
+    (tmp_path / "cot.json").write_text(json.dumps(cot))
+    rows = "\n".join(f"{1_700_000_000 + i * 86400},1,1,1,{1 + i / 100},{1 + i / 100},0" for i in range(400))
+    (tmp_path / "extra.json").write_text(json.dumps({"daily": {s: rows for s in ("HYG", "LQD", "^IRX", "INR=X", "CNY=X",
+                                                                                  "BTC-USD")}}))
+    monkeypatch.setenv("SENTINEL_OFFLINE_COT", str(tmp_path / "cot.json"))
+    monkeypatch.setenv("SENTINEL_OFFLINE_GOLD_EXTRA", str(tmp_path / "extra.json"))
+    monkeypatch.setenv("SENTINEL_DISABLE_LIVE", "1")
+    t = extra.extended_drivers()
+    names = set(t["driver"])
+    assert "Hedge-fund net position (CFTC)" in names and "Bitcoin" in names
+    assert not any("real yield" in n for n in names)          # FRED offline -> silently skipped
+    assert t["3-year percentile"].between(0, 1).all()

@@ -9,6 +9,12 @@
 - **What's moving gold:** the dollar, yields, real yields (TIP), VIX, silver, miners, oil and copper. **Psychology & demand:** fear & greed, RSI, GVZ, GLD ETF volume, streaks and drawdown. **Strategies:** buy & hold beat every rule on return; volatility-sized holding had the best Sharpe (0.91 vs 0.79) and the smaller drawdown (−26% vs −34%). **Seasonality.**
 - A **trade planner** that sizes a position from the user's own stop, with stops placed using the calibrated high/low levels. Every level rescales to the user's broker XAU/USD quote.
 
+**Final validation (21 Nov 2026)** is in [`research/gold`](research/gold/README.md) and on the page's *What we tested* tab:
+- 40 tuned direction configurations, chosen on 2006–2018. Expanded drivers: CFTC hedge-fund positioning, credit stress, Fed policy, INR/CNY/JPY/EUR, Bitcoin, GVZ. All still lost to "always up" on 2019–2026.
+- A HAR range-volatility upgrade gained only 0.2–4% and lost calibration, so the simpler model stays.
+- The only "profitable" pattern (range breakouts) disappeared once fills were modelled realistically.
+- CFD financing (~6%/yr) cut buy & hold from 13.7% to 9.0% a year.
+
 The paper bot (`config/config.yaml`) now trades **GLD** only. The **Gold bot lab** page runs its 15-minute walk-forward backtest and forward simulation on GLD. Crypto, oil and the multi-asset analyzer are preserved in the repo but removed from the public navigation.
 
 ## LSTM, TFT, Random Forest and real-data paper challengers

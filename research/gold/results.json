@@ -1,0 +1,202 @@
+{
+ "data_as_of": "20 Nov 2026",
+ "summary": "**Bottom line (final validation, 21 Nov 2026):** every choice was made on 2006–2018 data and tested once on 2019–2026. The **price ranges are accurate** and are the page's main forecast. **Gold's direction could not be predicted** by any model, driver set or rule we tried, and the one 'profitable' pattern turned out to be a backtest artefact. Nothing on this page should be read as a promise of profit.",
+ "sections": [
+  {
+   "title": "1. Gold drivers checked",
+   "table": [
+    {
+     "Driver": "US dollar (DXY), EUR, JPY",
+     "Source": "Yahoo",
+     "Tested in models": "yes",
+     "Result": "explains same-day moves; no forecasting gain"
+    },
+    {
+     "Driver": "Real yields (TIP ETF; official TIPS yield shown live)",
+     "Source": "Yahoo / FRED",
+     "Tested in models": "yes (TIP proxy)",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Inflation expectations (TIP vs IEF; 10y breakeven shown live)",
+     "Source": "Yahoo / FRED",
+     "Tested in models": "yes (proxy)",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Fed policy (3-month T-bill, 5y-3m curve)",
+     "Source": "Yahoo",
+     "Tested in models": "yes",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Hedge-fund positioning (CFTC managed money)",
+     "Source": "CFTC",
+     "Tested in models": "yes, 6-day publication lag",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Credit stress (HYG vs LQD)",
+     "Source": "Yahoo",
+     "Tested in models": "yes",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Fear: VIX and gold VIX (GVZ)",
+     "Source": "Yahoo",
+     "Tested in models": "yes",
+     "Result": "GVZ improves RANGE forecasts (used); no direction gain"
+    },
+    {
+     "Driver": "India and China demand (INR, CNY)",
+     "Source": "Yahoo",
+     "Tested in models": "yes",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Silver, copper, oil, miners (GDX), stocks, Bitcoin",
+     "Source": "Yahoo",
+     "Tested in models": "yes",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "ETF demand (GLD volume)",
+     "Source": "Yahoo",
+     "Tested in models": "yes",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Seasonality, momentum, trend, RSI, 52-week anchoring",
+     "Source": "price",
+     "Tested in models": "yes",
+     "Result": "no forecasting gain"
+    },
+    {
+     "Driver": "Policy uncertainty (EPU)",
+     "Source": "FRED",
+     "Tested in models": "no (download blocked during research)",
+     "Result": "shown live as context"
+    },
+    {
+     "Driver": "Geopolitical risk index (GPR)",
+     "Source": "Caldara–Iacoviello",
+     "Tested in models": "no (download blocked)",
+     "Result": "not included"
+    },
+    {
+     "Driver": "Central-bank purchases, ETF tonnage, physical demand",
+     "Source": "World Gold Council (quarterly)",
+     "Tested in models": "no",
+     "Result": "too infrequent for daily or weekly signals"
+    }
+   ]
+  },
+  {
+   "title": "2. Direction models: tuned on 2006–2018, tested once on 2019–2026",
+   "text": "Candidates: logistic regression at 3 regularisation strengths and gradient boosting in 2 sizes, on the base (23) or expanded (40) driver set, at 4 horizons: 40 configurations. The configuration with the best probability score on 2006–2018 was frozen and then tested.",
+   "table": [
+    {
+     "Horizon": "1 day(s)",
+     "Chosen on 2006–2018": "logit_C0.01 (base features)",
+     "2019–26 accuracy": "53.9%",
+     "'Always up' accuracy": "54.3%",
+     "AUC": 0.514,
+     "p-value": 0.649,
+     "Tests": 1986,
+     "Verdict": "no edge"
+    },
+    {
+     "Horizon": "5 day(s)",
+     "Chosen on 2006–2018": "lgbm_small (expanded features)",
+     "2019–26 accuracy": "55.4%",
+     "'Always up' accuracy": "56.9%",
+     "AUC": 0.502,
+     "p-value": 0.745,
+     "Tests": 397,
+     "Verdict": "no edge"
+    },
+    {
+     "Horizon": "21 day(s)",
+     "Chosen on 2006–2018": "lgbm_small (base features)",
+     "2019–26 accuracy": "52.1%",
+     "'Always up' accuracy": "61.7%",
+     "AUC": 0.516,
+     "p-value": 0.977,
+     "Tests": 94,
+     "Verdict": "no edge"
+    },
+    {
+     "Horizon": "63 day(s)",
+     "Chosen on 2006–2018": "lgbm_small (expanded features)",
+     "2019–26 accuracy": "48.4%",
+     "'Always up' accuracy": "71.0%",
+     "AUC": 0.692,
+     "p-value": 0.998,
+     "Tests": 31,
+     "Verdict": "no edge"
+    }
+   ]
+  },
+  {
+   "title": "3. Range model upgrade tested",
+   "text": "A HAR volatility model built from intraday highs and lows plus GVZ, chosen on 2006–2018, changed the 2019–2026 interval score by only −0.2% to −4% (weekly and monthly) and +0.5–1% (daily). It also dropped monthly 90% accuracy from 86% to 84%. **Kept the simpler current model.** Measured accuracy of the live model: 80% range 78–80%, 90% range 86–89%."
+  },
+  {
+   "title": "4. Profit tests (with spread, slippage and CFD financing)",
+   "table": [
+    {
+     "Strategy": "Buy & hold, ETF-style",
+     "2019–26 return/yr": "+13.7%",
+     "Sharpe": 0.69,
+     "Note": "benchmark"
+    },
+    {
+     "Strategy": "Buy & hold via CFD (6%/yr financing)",
+     "2019–26 return/yr": "+9.0%",
+     "Sharpe": 0.46,
+     "Note": "financing costs ~4.7 points a year"
+    },
+    {
+     "Strategy": "Volatility-sized hold via CFD",
+     "2019–26 return/yr": "+9.7%",
+     "Sharpe": 0.56,
+     "Note": "best Sharpe of the CFD rules; smaller drawdown"
+    },
+    {
+     "Strategy": "200-day trend via CFD",
+     "2019–26 return/yr": "+8.1%",
+     "Sharpe": 0.47,
+     "Note": "lower drawdown, lower return"
+    },
+    {
+     "Strategy": "Buy the dip at the 80% low level, exit at the close",
+     "2019–26 return/yr": "−5.1%",
+     "Sharpe": -0.63,
+     "Note": "loses: dips keep going"
+    },
+    {
+     "Strategy": "Breakout at the 50% high/low level (naive fills)",
+     "2019–26 return/yr": "+9.7%",
+     "Sharpe": 0.65,
+     "Note": "ARTEFACT: assumes fills at the level through opening gaps"
+    },
+    {
+     "Strategy": "Same breakout, realistic gap-aware fills",
+     "2019–26 return/yr": "−3.4%",
+     "Sharpe": -0.25,
+     "Note": "edge disappears; insignificant on GLD too"
+    },
+    {
+     "Strategy": "Intraday long, open to close",
+     "2019–26 return/yr": "−6.1%",
+     "Sharpe": -0.36,
+     "Note": "gold's gains came overnight"
+    }
+   ]
+  },
+  {
+   "title": "5. What this means for trading gold",
+   "text": "- Use the **ranges** for stop and target placement, and **volatility sizing** for position size. Both held up on unseen data.\n- Don't pay for direction calls. Ours failed the test, and most published 'accurate gold signals' are scored on the data they were built from.\n- For holds longer than a few days, CFD financing is a large, certain cost. An ETF or physical gold is cheaper.\n- Forward-test anything new in paper trading for 4–8 weeks before risking money."
+  }
+ ]
+}

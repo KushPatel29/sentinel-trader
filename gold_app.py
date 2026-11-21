@@ -42,10 +42,24 @@ def compute():
     out = {
         "gold": gold, "ctx": ctx, "ranges": M.ranges(gold, ctx), "direction": M.direction(gold, ctx),
         "drivers": M.drivers(gold, ctx), "sentiment": M.sentiment(gold, ctx),
-        "strategies": M.strategies(gold), "season": M.seasonality(gold), "loaded": pd.Timestamp.utcnow(),
+        "strategies": M.strategies(gold), "strategies_cfd": M.strategies(gold, financing_annual=0.06),
+        "season": M.seasonality(gold), "loaded": pd.Timestamp.utcnow(),
     }
     print(f"[gold] computed in {time.time() - t0:.1f}s", flush=True)
     return out
+
+
+@st.cache_data(ttl=6 * 3600, show_spinner=False)
+def extra_drivers():
+    from sentinel.gold.extra import extended_drivers
+    return extended_drivers()
+
+
+@st.cache_data(ttl=24 * 3600, show_spinner=False)
+def research_log():
+    import json
+    p = Path(__file__).parent / "research" / "gold" / "results.json"
+    return json.loads(p.read_text()) if p.exists() else None
 
 
 def money(x):
@@ -131,7 +145,7 @@ with cc:
     result of all tested strategies.</div></div>""", unsafe_allow_html=True)
 
 tabs = st.tabs(["📏 Price ranges", "🎯 Trade planner", "🧭 Direction tests", "🌍 What's moving gold",
-                "🧠 Psychology & demand", "📈 Strategies", "📅 Seasonality", "ℹ️ Method"])
+                "🧠 Psychology & demand", "📈 Strategies", "📅 Seasonality", "🔬 What we tested", "ℹ️ Method"])
 
 # ------------------------------------------------------------------ ranges
 with tabs[0]:
@@ -233,6 +247,24 @@ with tabs[3]:
                                                                                               format="%.2f")})
     st.caption("'Pushing gold' combines each driver's 1-month move with how it has moved alongside gold over the past "
                "year. These relationships explain what has happened. They do not forecast what happens next.")
+    st.markdown("**More drivers: positioning, real yields, policy, credit, Asian demand**")
+    with st.spinner("Loading CFTC, FRED and market data..."):
+        try:
+            ex = extra_drivers()
+        except Exception:
+            ex = pd.DataFrame()
+    if ex.empty:
+        st.caption("These sources are unavailable right now.")
+    else:
+        ex = ex.copy()
+        ex["latest"] = ex.apply(lambda r: f"{r['latest']:.1%}" if r["unit"] == "% of open interest"
+                                else f"{r['latest']:,.2f}", axis=1)
+        ex["1-month change"] = ex.apply(lambda r: f"{r['1-month change']:+.1%}" if r["unit"] in ("ratio", "INR", "CNY", "USD")
+                                        else f"{r['1-month change']:+.2f}", axis=1)
+        st.dataframe(ex.drop(columns="unit"), hide_index=True, width="stretch", column_config={
+            "3-year percentile": st.column_config.ProgressColumn(min_value=0, max_value=1, format="percent")})
+        st.caption("Each of these drivers was added to the forecasting models and tested on 2019–2026. None improved "
+                   "the forecasts (see 'What we tested'), so they appear here as context only.")
 
 # ------------------------------------------------------------------ psychology
 with tabs[4]:
@@ -253,7 +285,9 @@ with tabs[4]:
 
 # ------------------------------------------------------------------ strategies
 with tabs[5]:
-    S, curves = D["strategies"]
+    how = st.radio("How do you hold gold?", ["CFD / spot XAU/USD (pays ~6%/yr overnight financing on longs)",
+                                             "ETF or physical (no financing)"], horizontal=True)
+    S, curves = D["strategies_cfd"] if how.startswith("CFD") else D["strategies"]
     st.markdown("Simple, fixed rules on gold, traded at the next day's close with costs, **2019–2026**:")
     st.dataframe(S, hide_index=True, width="stretch", column_config={
         c_: st.column_config.NumberColumn(format="percent") for c_ in
@@ -268,7 +302,8 @@ with tabs[5]:
     st.plotly_chart(fig, width="stretch")
     st.caption("No rule earned more than buying and holding through gold's 2019–2026 bull run. Volatility sizing "
                "(holding less when gold swings hard) gave the best return per unit of risk and the smaller drawdown. "
-               "Trend filters cut drawdowns at the cost of return.")
+               "Trend filters cut drawdowns at the cost of return. Holding through a CFD costs roughly 4–5 points of "
+               "return a year in financing, so for holds longer than a few days an ETF is usually cheaper.")
 
 # ------------------------------------------------------------------ seasonality
 with tabs[6]:
@@ -282,6 +317,20 @@ with tabs[6]:
                "March and the autumn weaker.")
 
 with tabs[7]:
+    log = research_log()
+    if not log:
+        st.caption("Research log not found.")
+    else:
+        st.markdown(log["summary"])
+        for sec in log["sections"]:
+            st.markdown(f"**{sec['title']}**")
+            if sec.get("text"):
+                st.markdown(sec["text"])
+            if sec.get("table"):
+                st.dataframe(pd.DataFrame(sec["table"]), hide_index=True, width="stretch")
+        st.caption(f"Reproduce with the scripts in research/gold (data as of {log['data_as_of']}).")
+
+with tabs[8]:
     st.markdown(f"""
 **Price ranges:**
 - Volatility forecast = average of realised volatility (exponentially weighted, λ = 0.94) and gold's implied volatility (CBOE GVZ). This blend scored best on 2009–2018 data. It was chosen before any later data was examined.

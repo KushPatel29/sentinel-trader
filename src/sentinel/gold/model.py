@@ -214,7 +214,10 @@ def sentiment(gold: pd.DataFrame, ctx: pd.DataFrame) -> dict:
 
 
 # ---------------------------------------------------------------------------------------------- strategies
-def strategies(gold: pd.DataFrame, start: str = HOLDOUT, cost_bps: float = 2.0) -> tuple[pd.DataFrame, pd.DataFrame]:
+def strategies(gold: pd.DataFrame, start: str = HOLDOUT, cost_bps: float = 2.5,
+               financing_annual: float = 0.0) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Fixed rules, next-day execution. `financing_annual` charges overnight holding cost on the long
+    notional (CFD brokers typically charge ~5-7%/yr; an ETF charges ~0.4%/yr, physical ~0)."""
     c = gold["close"]
     ret = c.pct_change()
     vol = np.log(c).diff().rolling(21).std() * np.sqrt(252)
@@ -228,7 +231,9 @@ def strategies(gold: pd.DataFrame, start: str = HOLDOUT, cost_bps: float = 2.0) 
     }
     rows, curves = [], {}
     for name, pos in rules.items():
-        R = (pos.shift(1) * ret - pos.diff().abs() * cost_bps / 1e4).loc[start:].dropna()
+        held = pos.shift(1)
+        R = (held * ret - pos.diff().abs() * cost_bps / 1e4 - held.clip(lower=0) * financing_annual / 252
+             ).loc[start:].dropna()
         eq = (1 + R).cumprod()
         yrs = len(R) / 252
         rows.append({"strategy": name, "annual_return": eq.iloc[-1] ** (1 / yrs) - 1,
